@@ -6,7 +6,7 @@ class GameBoard {
 
   // constructor
   GameBoard() { //<>//
-    player = new Player(20, 20);
+    player = new Player(300, 300);
     won = false;
   }
 
@@ -17,12 +17,12 @@ class GameBoard {
  //<>//
   void keyPressed(char k) {
     if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
-      player.setActionState(k);
+      player.activateActionState(k);
     }
   }
   void keyReleased(char k) {
     if (k == 'a' || k == 'd' || k == ' ') { // character movement released
-      player.setIdleState();
+      player.deactivateActionState(k);
     }
   }
 }
