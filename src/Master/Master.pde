@@ -2,7 +2,6 @@
 GameBoard g;
 
 void setup() {
-  println("setting up");
 	// game set-up
 	g = new GameBoard();
 	size(500, 500);
@@ -16,4 +15,9 @@ void draw() {
 void keyPressed() {
 	char k = key;
 	g.keyPressed(k);
+}
+
+void keyReleased() {
+  char k = key;
+  g.keyReleased(k);
 }

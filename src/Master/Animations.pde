@@ -8,7 +8,6 @@ class Animations {
   int animationTimer = 0;
 
   Animations() {
-    println("creating animations");
     folder = "spriteImgs/";
 
     idle = new PImage[actionFrames];
