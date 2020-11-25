@@ -19,10 +19,6 @@ class Player {
 		x = _x;
 		y = _y;
     currFrame = 1;
-		runningLeft = false;
-		runningRight = false;
-    running = true;
-		jump = false;
     animations = new Animations();
     timer = new Timer();
     keys = new boolean[3];
