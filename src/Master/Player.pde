@@ -5,11 +5,11 @@ class Player {
   int currFrame;
 	PImage[] currAnimation;
 	boolean runningLeft, runningRight, jumping, idle;
+  boolean action;
   Animations animations;
   Timer timer;
 	
 	Player(int _x, int _y) {
-    println("creating player");
 		// starting position of player (spawn location)
 		x = _x;
 		y = _y;
@@ -18,20 +18,24 @@ class Player {
 		runningRight = false;
 		jumping = false;
 		idle = true;
+    action = false;
     animations = new Animations();
     timer = new Timer();
     timer.start();
     currAnimation = animations.idle;
 	}
 	void show() {
-    println("in show");
 		// show the player in various states
     pushMatrix();
     translate(width/2, height/2);
 		animate();
     popMatrix();
+    action = false;
 	}
-	void setState(char k) {
+  void setIdleState() {
+    currAnimation = animations.idle;
+  }
+	void setActionState (char k) {
 		// set state of the player (run, jump, idle)
 		if (k == ' ') {
 			currAnimation = animations.jump;
@@ -43,19 +47,16 @@ class Player {
             currAnimation = animations.run;
 			runningRight = true;
 			runningLeft = false;
-		} else {
-            currAnimation = animations.idle;
-        }
+		}
 	}
     void animate() {
         float timeElapsed = timer.getElapsedTime();
-        println("time elapsed " + timeElapsed); 
+        PImage frame = currAnimation[currFrame];
+        frame.resize(60,60);
         imageMode(CENTER);
-        println("we are animating");
         // show the image and run the timer
-        image(currAnimation[currFrame], 0, 0);
+        image(frame, 0, 0);
         if ((timeElapsed - animations.animationTimer) >= animations.animationTimerVal) {
-            println("changing frame");
             currFrame = (currFrame + 1) % animations.actionFrames;
             animations.animationTimer = timer.getElapsedTime();
         }
