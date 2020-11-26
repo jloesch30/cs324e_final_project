@@ -21,3 +21,7 @@ void keyReleased() {
   char k = key;
   g.keyReleased(k);
 }
+
+void mousePressed() {
+  g.mousePressed();
+}

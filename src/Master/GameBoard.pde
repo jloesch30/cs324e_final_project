@@ -6,7 +6,7 @@ class GameBoard {
 
   // constructor
   GameBoard() { //<>//
-    player = new Player(300, 300);
+    player = new Player(300, 100);
     won = false;
   }
 
@@ -24,5 +24,8 @@ class GameBoard {
     if (k == 'a' || k == 'd' || k == ' ') { // character movement released
       player.deactivateActionState(k);
     }
+  }
+  void mousePressed() {
+    player.spawnProjectile();
   }
 }
