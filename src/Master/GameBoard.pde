@@ -25,4 +25,7 @@ class GameBoard {
       player.deactivateActionState(k);
     }
   }
+  void mousePressed() {
+    player.spawnProjectile();
+  }
 }

@@ -1,36 +1,37 @@
 class Player {
-	/* this class will handle all player interactions, we will include the
-	sprite loading in class Animations 
-  note: I had a hard time figuring out the extends functionality, it was
-  giving me recursive calls when I was trying to reference the master class :(
-  Hopfully this is okay but feel free to change anything! 
-  */
-  PVector position;
-  int currFrame;
-	PImage[] currAnimation;
-	boolean runningLeft, runningRight, running, jump, idle;
-  boolean action;
-  boolean keys[]; // [0]: runLeft [1]: runRight [2] jump
-  Animations animations;
+  // timer
   Timer timer;
   
-  // forces
+  // animation variables, movement keys
+  int currFrame;
+  PImage[] currAnimation;
+  boolean runningLeft, runningRight, running, jump, idle;
+  boolean keys[]; // [0]: runLeft [1]: runRight [2] jump
+  Animations animations;
+  
+  // forces and position
   PVector velocity;
   PVector acceleration;
   PVector gravity;
   PVector jumpForce;
+  PVector position;
   
   // mass
   float mass;
+  
+  // projectiles
+  ArrayList<Projectile> projectiles;
 	
 	Player(float x, float y) {
     position = new PVector(x, y);
+    
     // mass and forces
     mass = 10.0;
-    jumpForce = new PVector(0, -15.0);
+    jumpForce = new PVector(0, -1.3);
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
     gravity = new PVector(0, 0.15*mass);
+    
     // animation variables and movement keys
     currFrame = 1;
     animations = new Animations();
@@ -40,21 +41,30 @@ class Player {
     keys[1] = false;
     keys[2]= false;
     currAnimation = animations.idle;
+    
     // timer
     timer.start();
+    
+    // projectiles
+    projectiles = new ArrayList<Projectile>();
 	}
 	void show() {
     pushMatrix();
     translate(position.x, position.y);
-    if (keys[0] && keys[1]) { // both a and d pressed
+    if (keys[0] && keys[1]) {
       scale(1.0, 1.0);
-    } else if (keys[0]) { // only a pressed
+    } else if (keys[0]) { // player moving left, flip position to mimic turn around
       scale(-1.0, 1.0);
-    } else { // only d pressed or none
+    } else { 
       scale(1.0, 1.0);
     }
 		animate();
     popMatrix();
+    
+    // projectile handling
+    if (!(projectiles.size() < 1)) {
+      fireProjectiles();
+    }
 	}
   void deactivateActionState(char k) {
     if (k == ' ') {
@@ -120,26 +130,40 @@ class Player {
         }
     }
     void applyForce(PVector force) {
-      // A = F/M 
-      PVector f = PVector.div(force, mass);
-      // accumulate forces in acceleration
-      acceleration.add(f);
+      PVector f = PVector.div(force, mass); // A = F/M 
+      acceleration.add(f); // accumulate forces in acceleration
     }
     void update() {
       velocity.add(acceleration);
       position.add(velocity);
-      // clear acceleration each frame
-      acceleration.mult(0);
+      acceleration.mult(0); // clear acceleration each frame
     }
     
     void checkEdge() {
-      println("gravity is: " + gravity.y);
-      if (position.y > height - 51) {
-        println("image at floor, position is: " + position.y + " and height is: " + height);
-        position.y = height - 50;
-        gravity.y = 0.0;
+      if (position.y > height - 60) {
+        //println("image at floor, position is: " + position.y + " and height is: " + height);
+        position.y = 441.0; // reposition player on the object
+        gravity.y = 0.0; // turn off gravity
       } else {
         gravity.y = 0.15*mass;
       }
+    }
+    void fireProjectiles() {
+      ArrayList<Projectile> pCopy = new ArrayList<Projectile>(projectiles);
+      for (Projectile p: pCopy) {
+        p.display();
+        boolean destroy = p.complete();
+        //println("destroy is: " + destroy);
+        if (destroy) {
+          projectiles.remove(p);
+        }
+      }
+    }
+    void spawnProjectile() {
+      println("projectile spawned");
+      PVector startPos = new PVector(position.x, position.y);
+      println("start position is: " + startPos.x + ", " + startPos.y);
+      Projectile p = new Projectile(startPos, new PVector(mouseX, mouseY));
+      projectiles.add(p);
     }
 }
