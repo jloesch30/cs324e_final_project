@@ -5,7 +5,7 @@ class Player {
   giving me recursive calls when I was trying to reference the master class :(
   Hopfully this is okay but feel free to change anything! 
   */
-	int x, y;
+  PVector position;
   int currFrame;
 	PImage[] currAnimation;
 	boolean runningLeft, runningRight, running, jump, idle;
@@ -13,11 +13,25 @@ class Player {
   boolean keys[]; // [0]: runLeft [1]: runRight [2] jump
   Animations animations;
   Timer timer;
+  
+  // forces
+  PVector velocity;
+  PVector acceleration;
+  PVector gravity;
+  PVector jumpForce;
+  
+  // mass
+  float mass;
 	
-	Player(int _x, int _y) {
-		// starting position of player (spawn location)
-		x = _x;
-		y = _y;
+	Player(float x, float y) {
+    position = new PVector(x, y);
+    // mass and forces
+    mass = 10.0;
+    jumpForce = new PVector(0, -15.0);
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0);
+    gravity = new PVector(0, 0.15*mass);
+    // animation variables and movement keys
     currFrame = 1;
     animations = new Animations();
     timer = new Timer();
@@ -25,12 +39,13 @@ class Player {
     keys[0] = false;
     keys[1] = false;
     keys[2]= false;
-    timer.start();
     currAnimation = animations.idle;
+    // timer
+    timer.start();
 	}
 	void show() {
     pushMatrix();
-    translate(x, y);
+    translate(position.x, position.y);
     if (keys[0] && keys[1]) { // both a and d pressed
       scale(1.0, 1.0);
     } else if (keys[0]) { // only a pressed
@@ -63,26 +78,35 @@ class Player {
         /* 
         This function handles the animation frames and moving the player (changing x and y)
         */
+        applyForce(gravity);
         
         // key combos
         if (keys[0] && !(keys[1]) && !(keys[2])) { // left pressed
           currAnimation = animations.run;
-          moveLeft();
+          position.x -= 1;
         } else if (!(keys[0]) && keys[1] && !(keys[2])) { // right pressed
           currAnimation = animations.run;
-          moveRight();
+          position.x += 1;
         } else if (keys[0] && !(keys[1]) && keys[2]) { // left, jump pressed
           currAnimation = animations.jump;
-          moveLeftJump();
+          position.x -= 1;
+          applyForce(jumpForce);
         } else if (!(keys[0]) && keys[1] && keys[2]) { // right, jump pressed
           currAnimation = animations.jump;
-          moveRightJump();
+          position.x += 1;
+          applyForce(jumpForce);
         } else if (!(keys[0]) && !(keys[1]) && keys[2]) { // jump pressed
           currAnimation = animations.jump;
-          moveJump();
+          applyForce(jumpForce);
         } else {
           currAnimation = animations.idle; // other or nothing pressed
         }
+        
+        // update forces
+        update();
+        
+        // checkEdge
+        checkEdge();
         
         // image render
         float timeElapsed = timer.getElapsedTime();
@@ -95,26 +119,27 @@ class Player {
             animations.animationTimer = timer.getElapsedTime();
         }
     }
+    void applyForce(PVector force) {
+      // A = F/M 
+      PVector f = PVector.div(force, mass);
+      // accumulate forces in acceleration
+      acceleration.add(f);
+    }
+    void update() {
+      velocity.add(acceleration);
+      position.add(velocity);
+      // clear acceleration each frame
+      acceleration.mult(0);
+    }
     
-    /*
-    movement functions below
-    */
-    
-    void moveLeft() {
-      x -= 1;
-    }
-    void moveRight() {
-      x += 1;
-    }
-    void moveLeftJump() {
-      x -= 1;
-      y -= 1;
-    }
-    void moveRightJump() {
-      x += 1;
-      y -= 1;
-    }
-    void moveJump() {
-      y -= 1;
+    void checkEdge() {
+      println("gravity is: " + gravity.y);
+      if (position.y > height - 51) {
+        println("image at floor, position is: " + position.y + " and height is: " + height);
+        position.y = height - 50;
+        gravity.y = 0.0;
+      } else {
+        gravity.y = 0.15*mass;
+      }
     }
 }
