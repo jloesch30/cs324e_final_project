@@ -1,3 +1,7 @@
 # ignore directories
 .DS_Store
-env/
+env\
+
+# vs code and processing run modules
+\.vscode
+\out
