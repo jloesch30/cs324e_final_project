@@ -160,9 +160,7 @@ class Player {
       }
     }
     void spawnProjectile() {
-      println("projectile spawned");
       PVector startPos = new PVector(position.x, position.y);
-      println("start position is: " + startPos.x + ", " + startPos.y);
       Projectile p = new Projectile(startPos, new PVector(mouseX, mouseY));
       projectiles.add(p);
     }
