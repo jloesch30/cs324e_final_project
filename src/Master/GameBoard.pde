@@ -3,8 +3,9 @@ class GameBoard {
   //Timer timer;
   boolean won;
   int lives;
+  Obstical obs;
 
-  // constructor
+  // constructor //<>//
   GameBoard() { //<>//
     player = new Player(300, 100);
     won = false;
@@ -13,7 +14,7 @@ class GameBoard {
   // display board
   void display() {
     player.show();
-  }
+  } //<>//
  //<>//
   void keyPressed(char k) {
     if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
@@ -28,4 +29,7 @@ class GameBoard {
   void mousePressed() {
     player.spawnProjectile();
   }
+
+  ArrayList<Projectile> x = player.projectiles;
+
 }

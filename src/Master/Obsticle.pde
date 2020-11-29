@@ -11,7 +11,7 @@ class Obstical {
     Obstical(int _x, int _y, int _w, int _h) {
         x = _x;
         y= _y;
-
+    }
 
     // returns true of the projectile hits an obstical
     boolean checkProjectile(PVector projPos) {
