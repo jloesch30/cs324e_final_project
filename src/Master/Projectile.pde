@@ -37,10 +37,10 @@ class Projectile {
     popMatrix();
     move();
   }
+
+  // returns true if the projectile is at it's final destination
   boolean complete() {
-    //println("position.x is: " + position.x + " position.y is: " + position.y + " direction.x is: " + direction.x + " direction.y is: " + direction.y + "rangeDirXLeft is: " + rangeDirXLeft + " rangeDirXLeft is: " + rangeDirXRight );
     if ((position.x >= rangeDirXLeft && position.x <= rangeDirXRight) && (position.y <= rangeDirYDown && position.y >= rangeDirYUp)) {
-      //println("projectile stopped");
       return true;
     }
     return false;

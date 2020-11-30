@@ -10,6 +10,11 @@ void setup() {
 void draw() {
   background(0);
 	g.display();
+
+	// exit example
+	fill(255, 0, 0);
+	rect(420, 85, 20, 5);
+	fill(255);
 }
 
 void keyPressed() {
