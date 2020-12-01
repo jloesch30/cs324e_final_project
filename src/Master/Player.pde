@@ -19,9 +19,6 @@ class Player {
 	// mass
 	float mass;
 	
-	// projectiles
-	// ArrayList<Projectile> projectiles;
-	
 	Player(float x, float y) {
 	position = new PVector(x, y);
 	
@@ -60,11 +57,7 @@ class Player {
 	}
 		animate();
 	popMatrix();
-	
-	// projectile handling
-	// if (!(projectiles.size() < 1)) {
-	//   fireProjectiles();
-	// }
+
 	}
 	void deactivateActionState(char k) {
 	if (k == ' ') {
@@ -88,7 +81,7 @@ class Player {
 	    /* 
 	    This function handles the animation frames and moving the player (changing x and y)
 	    */
-	    // applyForce(gravity);
+	    applyForce(gravity);
 	    
 	    // key combos
 	    if (keys[0] && !(keys[1]) && !(keys[2])) { // left pressed
@@ -141,7 +134,6 @@ class Player {
 	
 	void checkEdge() {
 	  if (position.y > height - 60) {
-	    //println("image at floor, position is: " + position.y + " and height is: " + height);
 	    position.y = 441.0; // reposition player on the object
 	    gravity.y = 0.0; // turn off gravity
 	  } else {
