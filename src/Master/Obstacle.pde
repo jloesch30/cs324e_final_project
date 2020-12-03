@@ -25,9 +25,11 @@ class Obstacle  {
     float topRight = y + h;
     
     //boolean return if projectile is in the object
-    if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) {
+    if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) { //<>//
+      println("returning true");
       return true;
     }
+    println("returning false");
     return false;
   }
 }

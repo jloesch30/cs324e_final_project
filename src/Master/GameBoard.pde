@@ -11,7 +11,12 @@ class GameBoard {
 	
   // game board variables
 	boolean won;
+	boolean initialGameStart;
+  boolean pause;
 	int lives;
+
+	// GUI
+	GUI gui;
 	
 	// constructor
 	GameBoard() {
@@ -20,19 +25,29 @@ class GameBoard {
 		player = new Player(playerPosX, playerPosY);
 		pg = new PortalGun();
 		objs = new ArrayList<Obstacle>();
+		gui = new GUI();
 		won = false;
+    pause = false;
+		initialGameStart = true;
     testObjs();
 	}
 	
 	// display board
 	void display() {
-		player.show();
-		pg.display();
-		checkProjectiles();
-    for (Obstacle o : objs) {
-      o.display();
-    }
-	}
+    if (initialGameStart) {
+      gui.mainMenu();
+    } else if (pause) {
+      // TODO: make pause screen and freeze items in the back (or not). For now putting main menu
+      gui.mainMenu();
+    } else {
+      player.show();
+      pg.display(objs);
+      checkProjectiles();
+      for (Obstacle o : objs) {
+        o.display();
+      }
+		}
+  }
 	void checkProjectiles() {
 		if (!(pg.projectiles.size() < 1)) { // if no projectiles, do nothing
 			for (Projectile projectile : pg.projectiles) { // check positions of the projectiles
@@ -61,9 +76,16 @@ class GameBoard {
 		}
 	}
 	void keyReleased(char k) {
+    // movement keys
 		if (k == 'a' || k == 'd' || k == ' ') { // character movement released
 			player.deactivateActionState(k);
-		}
+
+    // GUI keys
+		} else if (key == ENTER && initialGameStart == true) { // start game
+        initialGameStart = false;
+    } else if (key == BACKSPACE && initialGameStart == false) { // Pause game
+        pause = !(pause);
+    }
 	}
 	void mousePressed() {
 		pg.spawnProjectile(player.position);
