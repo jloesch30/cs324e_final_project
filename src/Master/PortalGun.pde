@@ -4,6 +4,10 @@ class PortalGun {
 	
 	// in and out booleans
 	boolean in;
+
+  // protals (portal object within portal object)
+  Portals pIn;
+  Portals pOut;
 	
 	PortalGun() {
 		// projectiles
@@ -13,10 +17,16 @@ class PortalGun {
 		in = true;
 	}
 	void display(ArrayList<Obstacle> objs) {
-		// projectile handling
+		// projectile handling and portal handling
 		if (!(projectiles.size() < 1)) {
 			fireProjectiles(objs);
 		}
+    if (pIn != null) {
+      pIn.display();
+    }
+    if (pOut != null) {
+      pOut.display();
+    }
 	}
 	void fireProjectiles(ArrayList<Obstacle> objs) {
 		ArrayList<Projectile> pCopy = new ArrayList<Projectile>(projectiles);
@@ -24,9 +34,16 @@ class PortalGun {
 			p.display();
       boolean hitWall = hitWall(p, objs);
 			boolean destroy = p.complete();
-      println("hitwall is: " + hitWall + " destroy is: " + destroy);
 			if (destroy || hitWall) {
 				projectiles.remove(p);
+        if (hitWall) {
+          // spawn a portal where the projectile hit object
+          if (in) {
+            pIn = new Portals(p.position.x, p.position.y, true);
+          } else {
+            pOut = new Portals(p.position.x, p.position.y, false);
+          }
+        } //<>//
 			}
 		}
 	}
@@ -43,12 +60,10 @@ class PortalGun {
   boolean hitWall(Projectile p, ArrayList<Obstacle> objs) {
     // TODO
     for (Obstacle o : objs) {
-      boolean h = o.checkProjectile(p.position);
-      println("hitwall in the Hitwall function is: " + h);
-      if (h == true);
-        println("hitwall in the Hitwall function if statement is: " + h);
-        println("returning true in the hitWall function");
+      boolean h = o.checkProjectile(p.position); // true if wall hit 
+      if (h) {
         return true;
+      }
     }
     return false;
   }

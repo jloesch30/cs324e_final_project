@@ -2,7 +2,7 @@ class GameBoard {
 	// player, protal gun, and portals
 	Player player;
 	PortalGun pg;
-  Portals port;
+  //Portals port;
 	float playerPosX;
 	float playerPosY;
 	
@@ -40,29 +40,12 @@ class GameBoard {
       // TODO: make pause screen and freeze items in the back (or not). For now putting main menu
       gui.mainMenu();
     } else {
-      player.show();
-      pg.display(objs);
-      checkProjectiles();
+      player.display(objs);
       for (Obstacle o : objs) {
         o.display();
       }
 		}
   }
-	void checkProjectiles() {
-		if (!(pg.projectiles.size() < 1)) { // if no projectiles, do nothing
-			for (Projectile projectile : pg.projectiles) { // check positions of the projectiles
-        for (Obstacle obj : objs) {  // check if the projectile hit an obstacle
-          boolean hit = obj.checkProjectile(projectile.position);
-          if (hit && pg.in) {
-            println("hit");
-            port = new Portals(projectile.position.x, projectile.position.y);
-          } else if (hit && !(pg.in)) {
-            port.spwanOut(projectile.position);
-          }
-        }
-			}
-		}
-	}
 
 	// TODO: check if player touched a portal
 	void checkPlayer() {
@@ -72,7 +55,7 @@ class GameBoard {
 		if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
 			player.activateActionState(k);
 		} else if (k == '1') { 
-			pg.changeState();
+			player.pg.changeState();
 		}
 	}
 	void keyReleased(char k) {
@@ -88,7 +71,7 @@ class GameBoard {
     }
 	}
 	void mousePressed() {
-		pg.spawnProjectile(player.position);
+		player.pg.spawnProjectile(player.position);
 	}
   void testObjs() {
     Obstacle obj1 = new Obstacle(200, height-50, 20, 50);

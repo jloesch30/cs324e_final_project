@@ -18,6 +18,9 @@ class Player {
 	
 	// mass
 	float mass;
+
+  // portal gun
+  PortalGun pg;
 	
 	Player(float x, float y) {
 	position = new PVector(x, y);
@@ -42,11 +45,13 @@ class Player {
 	// timer
 	timer.start();
 	
-	// projectiles
-	// projectiles = new ArrayList<Projectile>();
+	// portalgun
+  pg = new PortalGun();
+  
 	}
-	void show() {
+	void display(ArrayList<Obstacle> objs) {
 	pushMatrix();
+  pg.display(objs); // 2 levels of higharchy
 	translate(position.x, position.y);
 	if (keys[0] && keys[1]) {
 	  scale(1.0, 1.0);

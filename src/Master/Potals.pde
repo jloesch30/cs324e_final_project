@@ -3,22 +3,25 @@ class Portals {
   // position data
   float x, y;
   
-  // every 'in' portal will have an 'out' portal = p2
-  Portals p2;
+  // in or out portal
+  boolean in;
   
-  Portals (float _x, float _y) {
+  // shape
+  PShape s;
+  
+  Portals (float _x, float _y, boolean _in) {
     x = _x;
     y = _y;
+    in = _in;
+    if (in) {
+      s = createShape(RECT, x, y, 10, 10);
+      s.setFill(color(0, 0, 255));
+    } else {
+      s = createShape(RECT, x, y, 10, 10);
+      s.setFill(color(255, 0, 0));
+    }
   }
   void display() {
-    fill(255, 0, 0);
-    rect(x, y, 20, 20);
-    if (p2 != null) {
-      p2.display();
-    }
-    
-  }
-  void spwanOut(PVector pos) {
-    p2 = new Portals(pos.x, pos.y);
+    shape(s);
   }
 }
