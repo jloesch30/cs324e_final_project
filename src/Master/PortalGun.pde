@@ -43,12 +43,14 @@ class PortalGun {
   boolean hitWall(Projectile p, ArrayList<Obstacle> objs) {
     // TODO
     for (Obstacle o : objs) {
-      boolean h = o.checkProjectile(p.position);
+      boolean h = o.checkProjectile(p.position); //<>//
       println("hitwall in the Hitwall function is: " + h);
-      if (h == true);
+      if (h) {
         println("hitwall in the Hitwall function if statement is: " + h);
         println("returning true in the hitWall function");
         return true;
+      }
+      return false;
     }
     return false;
   }
