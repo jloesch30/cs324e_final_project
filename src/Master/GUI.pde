@@ -3,6 +3,8 @@ class GUI {
   PImage victory;
   PImage defeat;
   PShape life;
+  PImage pause;
+  PImage pauseButton;
   //PImage pause; //this might be a keypress
   int alphaTxt = 100;
   int fadeTime = 2;
@@ -14,6 +16,8 @@ class GUI {
     defeat = loadImage("defeat.png");
     menu = loadImage("mainMenu.png");
     life = loadShape("portalLives.svg");
+    pause = loadImage("paused.png");
+    pauseButton = loadImage("pauseButton.png");
   }
 
   void levelDisplay(float lvls) { //done
@@ -44,18 +48,25 @@ class GUI {
   }
 
   void mainMenu() { //timer variable class set up for lvlpassed and victory 
-    image(menu, 10, 10);
+    image(menu, 25, 100);
   }
   void victoryDisplay() {
-    image(victory, 10, 10);
+    image(victory, 25, 100);
   }
 
   void defeatDisplay() {
-    image(defeat, 10, 10);
+    image(defeat, 25, 100);
   }
   
   void highScore(float timer) {
     textSize(20);
     text("time to beat: " + str(timer), 320,320);
+  }
+  void pauseMenu () {
+    image(pause, 25,100);
+  }
+  void pauseButton () {
+    image (pauseButton, 200, 10);
+    
   }
 }
