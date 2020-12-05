@@ -24,7 +24,6 @@ class PortalGun {
 			p.display();
       boolean hitWall = hitWall(p, objs);
 			boolean destroy = p.complete();
-      println("hitwall is: " + hitWall + " destroy is: " + destroy);
 			if (destroy || hitWall) {
 				projectiles.remove(p);
 			}
@@ -43,14 +42,10 @@ class PortalGun {
   boolean hitWall(Projectile p, ArrayList<Obstacle> objs) {
     // TODO
     for (Obstacle o : objs) {
-      boolean h = o.checkProjectile(p.position); //<>//
-      println("hitwall in the Hitwall function is: " + h);
-      if (h) {
-        println("hitwall in the Hitwall function if statement is: " + h);
-        println("returning true in the hitWall function");
+      boolean h = o.checkProjectile(p.position); // true if wall hit 
+      if (h) { //<>//
         return true;
       }
-      return false;
     }
     return false;
   }

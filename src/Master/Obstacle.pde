@@ -21,15 +21,14 @@ class Obstacle  {
   
   // returns true of the projectile hits an obstical
   boolean checkProjectile(PVector projPos) {
-    float btmLeft = x + w;
-    float topRight = y + h;
+    float topRight = x + w;
+    float btmLeft = y + h;
     
     //boolean return if projectile is in the object
-    if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) { //<>//
+    if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) { //<>// //<>//
       println("returning true");
       return true;
     }
-    println("returning false");
     return false;
   }
 }
