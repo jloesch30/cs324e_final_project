@@ -26,7 +26,6 @@ class Obstacle  {
     
     //boolean return if projectile is in the object
     if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) { //<>// //<>//
-      println("returning true");
       return true;
     }
     return false;
