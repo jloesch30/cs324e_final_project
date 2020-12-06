@@ -1,14 +1,18 @@
 // Master file - this module will run the entire game
 GameBoard g;
+PImage backgroundImg;
 
 void setup() {
 	// game set-up
 	g = new GameBoard();
 	size(500, 500);
+  backgroundImg = loadImage("background.png");
+  backgroundImg.resize(500,500);
 }
 
 void draw() {
-  background(0);
+
+  background(backgroundImg);
 	g.display();
 
 	// exit example
