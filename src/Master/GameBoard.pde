@@ -20,7 +20,7 @@ class GameBoard {
 	
 	// constructor
 	GameBoard() {
-		playerPosX = 50;
+		playerPosX = 100;
 		playerPosY = 20;
 		player = new Player(playerPosX, playerPosY);
 		pg = new PortalGun();

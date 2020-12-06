@@ -25,9 +25,29 @@ class Obstacle  {
     float btmLeft = y + h;
     
     //boolean return if projectile is in the object
-    if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) { //<>// //<>//
+    if ((projPos.x >= x && projPos.x <= topRight) && (projPos.y >= y && projPos.y <= btmLeft)) { //<>//
       return true;
     }
     return false;
+  }
+  
+  // player checks
+  String checkTop(PVector hitBox) {
+    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player top
+      return "true";
+    }
+    return "false";
+  }
+  String checkRight(PVector hitBox) {
+    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player top
+      return "true";
+    }
+    return "false";
+  }
+  String checkLeft(PVector hitBox) {
+    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player top
+      return "true";
+    }
+    return "false";
   }
 }
