@@ -37,7 +37,7 @@ class PortalGun {
 			if (destroy || hitWall) {
 				projectiles.remove(p);
         if (hitWall) {
-          // spawn a portal where the projectile hit object
+          // spawn a portal where the projectile hit object, check where the projectile hit object??
           if (in) {
             pIn = new Portals(p.position.x, p.position.y, true);
           } else {

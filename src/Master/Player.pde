@@ -90,10 +90,10 @@ class Player {
     popMatrix();
 
     // remove me
-    ellipse(position.x - 8, position.y - 23, 10, 10); // top
-    ellipse(position.x + 8, position.y, 10, 10); // right
-    ellipse(position.x - 8, position.y + 20, 10, 10); // down
-    ellipse(position.x - 8, position.y, 10, 10); // left
+    //ellipse(position.x - 8, position.y - 23, 10, 10); // top
+    //ellipse(position.x + 8, position.y, 10, 10); // right
+    //ellipse(position.x - 8, position.y + 20, 10, 10); // down
+    //ellipse(position.x - 8, position.y, 10, 10); // left
   }
   void deactivateActionState(char k) {
     if (k == ' ') {
@@ -216,7 +216,7 @@ class Player {
     if (hitBoxDown.y > height-5) {
       floor = true;
     }
-    println("walkRight is: " + walkRight + " walkLeft is: " + walkLeft + " fall is: " + fall + " floor is: " + floor);
+    //println("walkRight is: " + walkRight + " walkLeft is: " + walkLeft + " fall is: " + fall + " floor is: " + floor);
   }
   void updateHitBox() {
     hitBoxUp.x = position.x - 8;
