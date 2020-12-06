@@ -1,5 +1,4 @@
 class Portals {
-  
   // position data
   float x, y;
   
@@ -7,21 +6,21 @@ class Portals {
   boolean in;
   
   // shape
-  PShape s;
+  PImage s;
   
   Portals (float _x, float _y, boolean _in) {
     x = _x;
     y = _y;
     in = _in;
     if (in) {
-      s = createShape(RECT, x, y, 10, 10);
-      s.setFill(color(0, 0, 255));
+      s = loadImage("data/portal_shape_in.png");
     } else {
-      s = createShape(RECT, x, y, 10, 10);
-      s.setFill(color(255, 0, 0));
+      s = loadImage("data/portal_shape_out.png");
     }
+    s.resize(40, 40);
   }
   void display() {
-    shape(s);
+    imageMode(CENTER);
+    image(s, x, y);
   }
 }
