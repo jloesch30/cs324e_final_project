@@ -67,4 +67,9 @@ class PortalGun {
     }
     return false;
   }
+  void displayGun() {
+    pushMatrix();
+    rect(0+1, 0, 20, 10);
+    popMatrix();
+  }
 }

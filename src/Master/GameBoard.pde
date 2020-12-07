@@ -1,7 +1,19 @@
+//{
+//  "maps" : [
+//    "map1": {
+//      "time": 20,
+//      "obstacles": {}
+        
+//    }
+//  ]
+
+//}
+
 class GameBoard {
 	// player, protal gun, and portals
 	Player player;
 	PortalGun pg;
+
   //Portals port;
 	float playerPosX;
 	float playerPosY;
@@ -17,7 +29,15 @@ class GameBoard {
 
 	// GUI
 	GUI gui;
-	
+
+  //game timer
+	Timer t;
+  boolean timerRunning;
+  boolean gameOver;
+  
+  //REMOVE ME
+  int maxTimeAllowed;
+
 	// constructor
 	GameBoard() {
 		playerPosX = 100;
@@ -30,19 +50,38 @@ class GameBoard {
     pause = false;
 		initialGameStart = true;
     testObjs();
+    
+    // timer
+    t = new Timer();
+    timerRunning = false;
+    maxTimeAllowed = 20; // remove me
+    gameOver = false;
 	}
 	
 	// display board
 	void display() {
+    // timer
+    if (timerRunning) {
+      int timeElapsed = t.second();
+      if (timeElapsed >= maxTimeAllowed) {
+        gameOver = true;
+      }
+    }
+  
     if (initialGameStart) {
       gui.mainMenu();
     } else if (pause) {
       // TODO: make pause screen and freeze items in the back (or not). For now putting main menu
-      gui.mainMenu();
+      gui.pauseMenu();
+      t.stop();
     } else {
-      player.display(objs);
-      for (Obstacle o : objs) {
-        o.display();
+      if ((!(gameOver))) {
+        player.display(objs);
+        for (Obstacle o : objs) {
+          o.display();
+        }
+      } else {
+        gui.defeatDisplay();
       }
 		}
   }
@@ -66,6 +105,8 @@ class GameBoard {
     // GUI keys
 		} else if (key == ENTER && initialGameStart == true) { // start game
         initialGameStart = false;
+        t.start(); // start timer
+        timerRunning = true;
     } else if (key == BACKSPACE && initialGameStart == false) { // Pause game
         pause = !(pause);
     }
