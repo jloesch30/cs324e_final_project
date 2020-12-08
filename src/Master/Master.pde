@@ -1,5 +1,4 @@
 // Master file - this module will run the entire game
-MapReader r;
 GameBoard g;
 PImage backgroundImg;
 
@@ -9,8 +8,8 @@ void setup() {
 	size(500, 500);
   backgroundImg = loadImage("background.png");
   backgroundImg.resize(500,500);
-  r = new MapReader();
-  r.readMap(0);
+  //r = new MapReader();
+  //r.readMap(0);
 }
 
 void draw() {

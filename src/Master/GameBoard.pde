@@ -1,57 +1,62 @@
 class GameBoard {
+  // map reader
+  MapReader r;
+  
 	// player, protal gun, and portals
-	Player player;
+	Player player; // read in
 	PortalGun pg;
 
   //Portals port;
-	float playerPosX;
-	float playerPosY;
+	float playerPosX; // read in
+	float playerPosY; // read in
 	
 	// obstical holder
-	ArrayList<Obstacle> objs;
+	ArrayList<Obstacle> objs; // read in objs
 
   // exit
-  Exit e;
+  Exit e; // read in exit
 	
   // game board variables
 	boolean won;
 	boolean initialGameStart;
   boolean pause;
-	int lives;
+	int lives; // read in
 
 	// GUI
 	GUI gui;
 
   //game timer
-	Timer t;
+	Timer t; // read in new timer
   boolean timerRunning;
   boolean looseGame;
   
-  //REMOVE ME
-  int maxTimeAllowed;
+  // game state and win/loose conditions
+  int maxTimeAllowed; // read in
+  int mapNum;
+  boolean readNextMap;
 
 	// constructor
 	GameBoard() {
-		playerPosX = 100;
-		playerPosY = 300;
-		player = new Player(playerPosX, playerPosY);
 		pg = new PortalGun();
-		objs = new ArrayList<Obstacle>();
 		gui = new GUI();
+    r = new MapReader();
 		won = false;
     pause = false;
 		initialGameStart = true;
-    testObjs();
-    
-    // timer
-    t = new Timer();
-    timerRunning = false;
-    maxTimeAllowed = 5; // remove me
     looseGame = false;
+    mapNum = 0;
+    readNextMap = true;
+    objs = new ArrayList<Obstacle>();
+    // winGame is in the player class
 	}
 	
 	// display board
 	void display() {
+    // read in a map if needed
+    if (readNextMap) {
+      loadMap();
+    }
+  
     // timer
     if (timerRunning) {
       int timeElapsed = t.second();
@@ -113,7 +118,42 @@ class GameBoard {
     }
 	}
   void loadMap() {
+    // remove objects if nessisary
+    if (objs != null && objs.size() > 0) {
+      objs.clear();
+    }
     
+    // create new timer
+    t = new Timer();
+    r.readMap(mapNum);
+    
+    // load player data
+    maxTimeAllowed = r.maxTime;
+    playerPosX = r.player_spawn.getInt("x");
+    playerPosY = r.player_spawn.getInt("y");
+    player = new Player(playerPosX, playerPosY);
+    
+    // loading obstacles
+    for (int i = 0; i < r.objs.size(); i++) {
+      JSONObject obstacle = r.objs.getJSONObject(i);
+      JSONObject o = obstacle.getJSONObject("obstacle_"+nf(i+1, 0));
+      println("object being read in is: " + o);
+      int objX = o.getInt("x");
+      int objY = o.getInt("y");
+      int objW = o.getInt("w"); 
+      int objH = o.getInt("h");
+      Obstacle ob = new Obstacle(objX, objY, objW, objH);
+      objs.add(ob);
+    }
+    // load exit
+    int exitX = r.exit.getInt("x");
+    int exitY = r.exit.getInt("y");
+    int exitW = r.exit.getInt("w");
+    int exitH = r.exit.getInt("h");
+    e = new Exit(exitX, exitY, exitW, exitH);
+    
+    // change game state
+    readNextMap = false;
   }
 	void mousePressed() {
 		player.pg.spawnProjectile(player.position);
