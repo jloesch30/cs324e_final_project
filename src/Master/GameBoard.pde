@@ -1,14 +1,3 @@
-//{
-//  "maps" : [
-//    "map1": {
-//      "time": 20,
-//      "obstacles": {}
-        
-//    }
-//  ]
-
-//}
-
 class GameBoard {
 	// player, protal gun, and portals
 	Player player;
@@ -36,7 +25,7 @@ class GameBoard {
   boolean gameOver;
   
   //REMOVE ME
-  int maxTimeAllowed;
+  //int maxTimeAllowed;
 
 	// constructor
 	GameBoard() {
@@ -54,19 +43,19 @@ class GameBoard {
     // timer
     t = new Timer();
     timerRunning = false;
-    maxTimeAllowed = 20; // remove me
+    //maxTimeAllowed = null; // remove me
     gameOver = false;
 	}
 	
 	// display board
 	void display() {
     // timer
-    if (timerRunning) {
-      int timeElapsed = t.second();
-      if (timeElapsed >= maxTimeAllowed) {
-        gameOver = true;
-      }
-    }
+    //if (timerRunning) {
+    //  int timeElapsed = t.second();
+    //  if (timeElapsed >= maxTimeAllowed) {
+    //    gameOver = true;
+    //  }
+    //}
   
     if (initialGameStart) {
       gui.mainMenu();
