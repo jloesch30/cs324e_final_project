@@ -33,6 +33,9 @@ class Player {
   // collision
   boolean walkRight, walkLeft, fall, floor;
   
+  // gameState
+  boolean wonGame;
+  
 
   Player(float x, float y) {
     // position and hitbox
@@ -74,8 +77,11 @@ class Player {
 
     // portalgun
     pg = new PortalGun();
+    
+    // gameState
+    wonGame = false;
   }
-  void display(ArrayList<Obstacle> objs) {
+  void display(ArrayList<Obstacle> objs, Exit e) {
     pushMatrix();
     pg.display(objs); // 2 levels of higharchy
     translate(position.x, position.y);
@@ -87,14 +93,8 @@ class Player {
     } else { 
       scale(1.0, 1.0);
     }
-    animate(objs);
+    animate(objs, e);
     popMatrix();
-
-    // remove me
-    //ellipse(position.x - 8, position.y - 23, 10, 10); // top
-    //ellipse(position.x + 8, position.y, 10, 10); // right
-    //ellipse(position.x - 8, position.y + 20, 10, 10); // down
-    //ellipse(position.x - 8, position.y, 10, 10); // left
   }
   void deactivateActionState(char k) {
     if (k == ' ') {
@@ -114,9 +114,8 @@ class Player {
       keys[1] = true; // run right
     }
   }
-  void animate(ArrayList<Obstacle> objs) {
+  void animate(ArrayList<Obstacle> objs, Exit e) {
     /* This function handles the animation frames and moving the player (changing x and y) */
-    
     
     if (fall || (!(floor))) {
       applyForce(gravity);
@@ -133,17 +132,6 @@ class Player {
         position.x += 1;
       }
       currAnimation = animations.run;
-    //} else if (keys[0] && !(keys[1]) && keys[2]) { // left, jump pressed
-    //  currAnimation = animations.run;
-    //  position.x -= 1;
-    //  //applyForce(jumpForce);
-    //} else if (!(keys[0]) && keys[1] && keys[2]) { // right, jump pressed
-    //  currAnimation = animations.run;
-    //  position.x += 1;
-    //  //applyForce(jumpForce);
-    //} else if (!(keys[0]) && !(keys[1]) && keys[2]) { // jump pressed
-    //  currAnimation = animations.idle;
-    //  //applyForce(jumpForce);
     } else {
       currAnimation = animations.idle; // other or nothing pressed
     }
@@ -157,11 +145,16 @@ class Player {
     // checkPortals
     boolean playerTouchedPortal= checkPortals();
     
+    // check for exit
+    boolean playerTouchedExit = checkExit(e);
+    
     // checkEdges
-    if (!(playerTouchedPortal)) {
+    if ((!(playerTouchedPortal)) && (!(playerTouchedExit))) {
       checkEdges(objs);
-    } else {
+    } else if (playerTouchedPortal) {
       transportPlayer(); // change the position of the player if they have entered a portal
+    } else if (playerTouchedExit) {
+      wonGame = true;
     }
 
     // image render
@@ -249,4 +242,35 @@ class Player {
     position.x = pg.pOut.x;
     position.y = pg.pOut.y;
   }
+  boolean checkExit(Exit e) {
+    if ((hitBoxUp.x >= e.x && hitBoxUp.x <= e.x + e.w) && (hitBoxUp.y >= e.y && hitBoxUp.y <= e.y + e.h )) { // check player top
+      return true;
+    }
+    if ((hitBoxRight.x >= e.x && hitBoxRight.x <= e.x + e.w) && (hitBoxRight.y >= e.y && hitBoxRight.y <= e.y + e.h )) { // check player right
+      return true;
+    }
+    if ((hitBoxDown.x >= e.x && hitBoxDown.x <= e.x + e.w) && (hitBoxDown.y >= e.y && hitBoxDown.y <= e.y + e.h )) { // check player down
+      return true;
+    }
+    if ((hitBoxLeft.x >= e.x && hitBoxLeft.x <= e.x + e.w) && (hitBoxLeft.y >= e.y && hitBoxLeft.y <= e.y + e.h )) { // check player top
+      return true;
+    }
+    return false;
+  }
 }
+
+
+
+/* jump key combos */
+
+//} else if (keys[0] && !(keys[1]) && keys[2]) { // left, jump pressed
+    //  currAnimation = animations.run;
+    //  position.x -= 1;
+    //  //applyForce(jumpForce);
+    //} else if (!(keys[0]) && keys[1] && keys[2]) { // right, jump pressed
+    //  currAnimation = animations.run;
+    //  position.x += 1;
+    //  //applyForce(jumpForce);
+    //} else if (!(keys[0]) && !(keys[1]) && keys[2]) { // jump pressed
+    //  currAnimation = animations.idle;
+    //  //applyForce(jumpForce);
