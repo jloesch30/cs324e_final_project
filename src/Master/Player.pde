@@ -79,6 +79,7 @@ class Player {
     pushMatrix();
     pg.display(objs); // 2 levels of higharchy
     translate(position.x, position.y);
+    pg.displayGun(); // show an image of the gun
     if (keys[0] && keys[1]) {
       scale(1.0, 1.0);
     } else if (keys[0]) { // player moving left, flip position to mimic turn around
@@ -153,8 +154,15 @@ class Player {
     //updateHitBox
     updateHitBox();
     
+    // checkPortals
+    boolean playerTouchedPortal= checkPortals();
+    
     // checkEdges
-    checkEdges(objs);
+    if (!(playerTouchedPortal)) {
+      checkEdges(objs);
+    } else {
+      transportPlayer(); // change the position of the player if they have entered a portal
+    }
 
     // image render
     float timeElapsed = timer.getElapsedTime();
@@ -162,6 +170,7 @@ class Player {
     frame.resize(60, 60);
     imageMode(CENTER);
     image(frame, 0, 0);
+    imageMode(CORNER);
     if ((timeElapsed - animations.animationTimer) >= animations.animationTimerVal) {
       currFrame = (currFrame + 1) % animations.actionFrames;
       animations.animationTimer = timer.getElapsedTime();
@@ -172,6 +181,7 @@ class Player {
     acceleration.add(f); // accumulate forces in acceleration
   }
   void update() {
+    println("floor is: " + floor + " and fall is: " + fall);
     // if the player is on the floor, or standing on an obstacle, cancel forces
     if (floor || (!(fall))) {
       acceleration.mult(0.0);
@@ -215,6 +225,8 @@ class Player {
     // check floor
     if (hitBoxDown.y > height-5) {
       floor = true;
+    } else {
+      floor = false;
     }
     //println("walkRight is: " + walkRight + " walkLeft is: " + walkLeft + " fall is: " + fall + " floor is: " + floor);
   }
@@ -227,5 +239,14 @@ class Player {
     hitBoxDown.y = position.y + 20;
     hitBoxLeft.x = position.x - 8;
     hitBoxLeft.y = position.y;
+  }
+  boolean checkPortals() {
+    boolean playerTouchedPortal = pg.checkPortals(hitBox);
+    return playerTouchedPortal;
+  }
+  void transportPlayer() {
+    // transport player
+    position.x = pg.pOut.x;
+    position.y = pg.pOut.y;
   }
 }

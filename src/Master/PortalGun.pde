@@ -67,4 +67,19 @@ class PortalGun {
     }
     return false;
   }
+  void displayGun() {
+    pushMatrix();
+    rect(0+1, 0, 20, 10);
+    popMatrix();
+  }
+  boolean checkPortals(PVector[][] hitBox) {
+    // check if the player has entered the portal
+    if (pIn == null || pOut == null) {
+      return false;
+    } else {
+      // see if the player is in proximity to the (in) portal, if so, return true
+      boolean playerInsideInPortal = pIn.inside(hitBox);
+      return playerInsideInPortal;
+    }
+  }
 }

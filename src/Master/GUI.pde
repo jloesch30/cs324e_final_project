@@ -11,7 +11,6 @@ class GUI {
 
 
   GUI() {
-
     victory = loadImage("victory.png");
     defeat = loadImage("defeat.png");
     menu = loadImage("mainMenu.png");
