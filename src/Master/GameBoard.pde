@@ -9,6 +9,9 @@ class GameBoard {
 	
 	// obstical holder
 	ArrayList<Obstacle> objs;
+
+  // exit
+  Exit e;
 	
   // game board variables
 	boolean won;
@@ -22,15 +25,15 @@ class GameBoard {
   //game timer
 	Timer t;
   boolean timerRunning;
-  boolean gameOver;
+  boolean looseGame;
   
   //REMOVE ME
-  //int maxTimeAllowed;
+  int maxTimeAllowed;
 
 	// constructor
 	GameBoard() {
 		playerPosX = 100;
-		playerPosY = 20;
+		playerPosY = 300;
 		player = new Player(playerPosX, playerPosY);
 		pg = new PortalGun();
 		objs = new ArrayList<Obstacle>();
@@ -43,41 +46,45 @@ class GameBoard {
     // timer
     t = new Timer();
     timerRunning = false;
-    //maxTimeAllowed = null; // remove me
-    gameOver = false;
+    maxTimeAllowed = 5; // remove me
+    looseGame = false;
 	}
 	
 	// display board
 	void display() {
     // timer
-    //if (timerRunning) {
-    //  int timeElapsed = t.second();
-    //  if (timeElapsed >= maxTimeAllowed) {
-    //    gameOver = true;
-    //  }
-    //}
+    if (timerRunning) {
+      int timeElapsed = t.second();
+      if (timeElapsed >= maxTimeAllowed) {
+        looseGame = true;
+      }
+    }
   
     if (initialGameStart) {
       gui.mainMenu();
     } else if (pause) {
       // TODO: make pause screen and freeze items in the back (or not). For now putting main menu
       gui.pauseMenu();
-      t.stop();
     } else {
-      if ((!(gameOver))) {
-        player.display(objs);
+      if ((!(looseGame)) && (!(player.wonGame))) { // game can end either by a defeat or getting to the exit
+        player.display(objs, e);
         for (Obstacle o : objs) {
-          o.display();
+          o.display(); // display the objects
+          e.display(); // display the exit
         }
-      } else {
-        gui.defeatDisplay();
+      } else { // loosegame == true or player.wonGame == true
+        if (looseGame) {
+          gui.defeatDisplay();
+        } else if (player.wonGame) {
+          t.stop(); // stop the time
+          gui.victoryDisplay();
+        } else {
+          println("an error has occured");
+          gui.mainMenu();
+        }
       }
 		}
   }
-
-	// TODO: check if player touched a portal
-	void checkPlayer() {
-	}
 	
 	void keyPressed(char k) {
 		if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
@@ -98,8 +105,16 @@ class GameBoard {
         timerRunning = true;
     } else if (key == BACKSPACE && initialGameStart == false) { // Pause game
         pause = !(pause);
+        if (pause == true) {
+          t.stop();
+        } else {
+          t.resume();
+        }
     }
 	}
+  void loadMap() {
+    
+  }
 	void mousePressed() {
 		player.pg.spawnProjectile(player.position);
 	}
@@ -110,6 +125,7 @@ class GameBoard {
 		Obstacle obj4 = new Obstacle(400, 90, 70, 10);
 		Obstacle obj5 = new Obstacle(440, 40, 30, 50);
 		Obstacle obj6 = new Obstacle(75, 0, 40, 10);
+    e = new Exit(420, 85, 20, 5);
 
 		// obs
     objs.add(obj1);
@@ -118,6 +134,5 @@ class GameBoard {
 		objs.add(obj4);
 		objs.add(obj5);
 		objs.add(obj6);
-
   }
 }

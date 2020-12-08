@@ -1,18 +1,22 @@
 class Exit {
-  int posX;
-  int posY;
+  // size data
+  int x;
+  int y;
+  int w;
+  int h;
+  
+  // shape
   PShape e;
   
-  Exit(int x, int y) {
-    posX = x;
-    posY = y;
-    e = createShape(RECT, posX, posY, 10, 20);
+  Exit(int _x, int _y, int _w, int _h) {
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    e = createShape(RECT, x, y, w, h);
+    e.setFill(color(255, 0, 0));
   }
   void display() {
     shape(e);
-  }
-  boolean playerReachedExit() {
-    //TODO: if player enters the exit space, return true
-    return true;
   }
 }

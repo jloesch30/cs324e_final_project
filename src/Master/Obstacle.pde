@@ -39,13 +39,13 @@ class Obstacle  {
     return "false";
   }
   String checkRight(PVector hitBox) {
-    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player top
+    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player right
       return "true";
     }
     return "false";
   }
   String checkLeft(PVector hitBox) {
-    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player top
+    if ((hitBox.x >= x && hitBox.x <= x + w) && (hitBox.y >= y && hitBox.y <= y + h )) { // check player left
       return "true";
     }
     return "false";
