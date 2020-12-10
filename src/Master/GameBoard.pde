@@ -182,6 +182,8 @@ class GameBoard {
     readNextMap = false;
   }
 	void mousePressed() {
-		player.pg.spawnProjectile(player.position);
+    if (!(initialGameStart || pause || player.wonGame))  {
+      player.pg.spawnProjectile(player.position);
+    }	
 	}
 }
