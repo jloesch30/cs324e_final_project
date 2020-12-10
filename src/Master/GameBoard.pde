@@ -1,6 +1,7 @@
 class GameBoard {
-  // map reader
+  // map reader and writer
   MapReader r;
+  MapWriter output;
   
 	// player, protal gun, and portals
 	Player player; // read in
@@ -17,7 +18,6 @@ class GameBoard {
   Exit e; // read in exit
 	
   // game board variables
-	boolean won;
 	boolean initialGameStart;
   boolean pause;
 	int lives; // read in
@@ -32,29 +32,37 @@ class GameBoard {
   
   // game state and win/loose conditions
   int maxTimeAllowed; // read in
-  int mapNum;
+  int rawMapNum;
+  int realMapNum;
+  int numberOfMaps = 2;
   boolean readNextMap;
+  boolean levelsCompleted;
 
-	// constructor
 	GameBoard() {
 		pg = new PortalGun();
 		gui = new GUI();
     r = new MapReader();
-		won = false;
+    output = new MapWriter();
     pause = false;
 		initialGameStart = true;
     looseGame = false;
-    mapNum = 0;
-    readNextMap = true;
+    rawMapNum = 0;
+    readNextMap = false;
+    levelsCompleted = false;
     objs = new ArrayList<Obstacle>();
-    // winGame is in the player class
 	}
 	
 	// display board
 	void display() {
+    if (levelsCompleted) {
+      gui.victoryDisplay();
+      println("you completed the game!");
+    }
+    
     // read in a map if needed
     if (readNextMap) {
       loadMap();
+      t.start();
     }
   
     // timer
@@ -68,7 +76,7 @@ class GameBoard {
     if (initialGameStart) {
       gui.mainMenu();
     } else if (pause) {
-      // TODO: make pause screen and freeze items in the back (or not). For now putting main menu
+      // note: timer is handled in the button press
       gui.pauseMenu();
     } else {
       if ((!(looseGame)) && (!(player.wonGame))) { // game can end either by a defeat or getting to the exit
@@ -80,8 +88,12 @@ class GameBoard {
       } else { // loosegame == true or player.wonGame == true
         if (looseGame) {
           gui.defeatDisplay();
-        } else if (player.wonGame) {
+        } else if (player.wonGame && player.saveGame) {
           t.stop(); // stop the time
+          output.saveTime(t.second(), realMapNum); // save the time here
+          player.saveGame = false;
+          gui.victoryDisplay();
+        } else if (player.wonGame && player.saveGame == false) {
           gui.victoryDisplay();
         } else {
           println("an error has occured");
@@ -106,8 +118,17 @@ class GameBoard {
     // GUI keys
 		} else if (key == ENTER && initialGameStart == true) { // start game
         initialGameStart = false;
-        t.start(); // start timer
-        timerRunning = true;
+        timerRunning = true; // we may remove this
+        readNextMap = true;
+    } else if (key == ENTER && player.wonGame == true) { // player won game and requested next level
+        if ((rawMapNum + 1) >= (numberOfMaps)) {
+          levelsCompleted = true;
+        } else {
+          rawMapNum += 1; // increase map count to load next map in JSON file
+          readNextMap = true; // indicate to read next map
+          player.wonGame = false; // reset player won state
+          player.saveGame = true; // reset save flag for new map
+        }
     } else if (key == BACKSPACE && initialGameStart == false) { // Pause game
         pause = !(pause);
         if (pause == true) {
@@ -115,9 +136,13 @@ class GameBoard {
         } else {
           t.resume();
         }
+    } else if (key == 'q' && levelsCompleted == true) {
+      output.closeFile();
+      exit();
     }
 	}
   void loadMap() {
+    println("raw map num is: " + rawMapNum);
     // remove objects if nessisary
     if (objs != null && objs.size() > 0) {
       objs.clear();
@@ -125,7 +150,8 @@ class GameBoard {
     
     // create new timer
     t = new Timer();
-    r.readMap(mapNum);
+    r.readMap(rawMapNum);
+    realMapNum = (rawMapNum + 1);
     
     // load player data
     maxTimeAllowed = r.maxTime;
@@ -158,21 +184,4 @@ class GameBoard {
 	void mousePressed() {
 		player.pg.spawnProjectile(player.position);
 	}
-  void testObjs() {
-    Obstacle obj1 = new Obstacle(200, height-50, 20, 50);
-    Obstacle obj2 = new Obstacle(40, 30, 20, 50);
-		Obstacle obj3 = new Obstacle(40, 70, 70, 20);
-		Obstacle obj4 = new Obstacle(400, 90, 70, 10);
-		Obstacle obj5 = new Obstacle(440, 40, 30, 50);
-		Obstacle obj6 = new Obstacle(75, 0, 40, 10);
-    e = new Exit(420, 85, 20, 5);
-
-		// obs
-    objs.add(obj1);
-    objs.add(obj2);
-		objs.add(obj3);
-		objs.add(obj4);
-		objs.add(obj5);
-		objs.add(obj6);
-  }
 }

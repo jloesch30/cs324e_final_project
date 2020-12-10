@@ -35,6 +35,7 @@ class Player {
   
   // gameState
   boolean wonGame;
+  boolean saveGame;
   
 
   Player(float x, float y) {
@@ -80,6 +81,7 @@ class Player {
     
     // gameState
     wonGame = false;
+    saveGame = true;
   }
   void display(ArrayList<Obstacle> objs, Exit e) {
     pushMatrix();
@@ -174,7 +176,6 @@ class Player {
     acceleration.add(f); // accumulate forces in acceleration
   }
   void update() {
-    println("floor is: " + floor + " and fall is: " + fall);
     // if the player is on the floor, or standing on an obstacle, cancel forces
     if (floor || (!(fall))) {
       acceleration.mult(0.0);
@@ -244,15 +245,19 @@ class Player {
   }
   boolean checkExit(Exit e) {
     if ((hitBoxUp.x >= e.x && hitBoxUp.x <= e.x + e.w) && (hitBoxUp.y >= e.y && hitBoxUp.y <= e.y + e.h )) { // check player top
+      saveGame = true;
       return true;
     }
     if ((hitBoxRight.x >= e.x && hitBoxRight.x <= e.x + e.w) && (hitBoxRight.y >= e.y && hitBoxRight.y <= e.y + e.h )) { // check player right
+      saveGame = true;
       return true;
     }
     if ((hitBoxDown.x >= e.x && hitBoxDown.x <= e.x + e.w) && (hitBoxDown.y >= e.y && hitBoxDown.y <= e.y + e.h )) { // check player down
+      saveGame = true;
       return true;
     }
     if ((hitBoxLeft.x >= e.x && hitBoxLeft.x <= e.x + e.w) && (hitBoxLeft.y >= e.y && hitBoxLeft.y <= e.y + e.h )) { // check player top
+      saveGame = true;
       return true;
     }
     return false;
