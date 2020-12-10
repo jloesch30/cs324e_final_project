@@ -16,10 +16,10 @@ class Portals {
     in = _in;
     size = 40;
     if (in) {
-      s = loadImage("data/portal_shape_in.png");
+      s = loadImage("portal_shape_in.png");
       corner = new PVector((x-(size/2)), (y-(size/2)));
     } else {
-      s = loadImage("data/portal_shape_out.png");
+      s = loadImage("portal_shape_out.png");
     }
     s.resize(size, size);
   }
