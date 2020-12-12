@@ -21,7 +21,7 @@ class GUI {
     defeat = loadImage("defeat.png");
     menu = loadImage("mainMenu.png");
     pause = loadImage("paused.png");
-    pauseButton = loadImage("pauseButton.png");
+    pauseButton = loadImage("pauseButton.png"); 
   }
 
   void levelDisplay(float lvls) { //done
@@ -36,8 +36,6 @@ class GUI {
   }
 
   void lvlPassed() {
-    //for (int i = 0; i <= alphaTxt; i *= -1)  { //setup a timer variable later for fading
-    //alphaTxt += i;
     textSize(40);
     fill(255, 255, 255, alphaTxt);
     text("Level Passed", width/2, height/2);

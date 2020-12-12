@@ -34,7 +34,7 @@ class Player {
   boolean walkRight, walkLeft, fall, floor;
   
   // gameState
-  boolean wonGame;
+  boolean wonLevel;
   boolean saveGame;
   
 
@@ -80,7 +80,7 @@ class Player {
     pg = new PortalGun();
     
     // gameState
-    wonGame = false;
+    wonLevel = false;
     saveGame = true;
   }
   void display(ArrayList<Obstacle> objs, Exit e) {
@@ -156,7 +156,7 @@ class Player {
     } else if (playerTouchedPortal) {
       transportPlayer(); // change the position of the player if they have entered a portal
     } else if (playerTouchedExit) {
-      wonGame = true;
+      wonLevel = true;
     }
 
     // image render
@@ -222,7 +222,6 @@ class Player {
     } else {
       floor = false;
     }
-    //println("walkRight is: " + walkRight + " walkLeft is: " + walkLeft + " fall is: " + fall + " floor is: " + floor);
   }
   void updateHitBox() {
     hitBoxUp.x = position.x - 8;

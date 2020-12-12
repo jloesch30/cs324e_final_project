@@ -66,7 +66,7 @@ class GameBoard {
       gui.updateColor(255,255,255);
     }
   
-    if (levelsCompleted) {
+    if (levelsCompleted) { // all levels completed
       gui.victoryDisplay();
       println("you completed the game!");
     }
@@ -91,21 +91,21 @@ class GameBoard {
       // note: timer is handled in the button press
       gui.pauseMenu();
     } else {
-      if ((!(looseGame)) && (!(player.wonGame))) { // game can end either by a defeat or getting to the exit
+      if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
         player.display(objs, e);
         for (Obstacle o : objs) {
           o.display(); // display the objects
           e.display(); // display the exit
         }
-      } else { // loosegame == true or player.wonGame == true
+      } else { // loosegame == true or player.wonLevel == true
         if (looseGame) {
           gui.defeatDisplay();
-        } else if (player.wonGame && player.saveGame) {
+        } else if (player.wonLevel && player.saveGame) {
           t.stop(); // stop the time
           output.saveTime(t.second(), realMapNum); // save the time here
           player.saveGame = false;
           gui.victoryDisplay();
-        } else if (player.wonGame && player.saveGame == false) {
+        } else if (player.wonLevel && player.saveGame == false) { // player reached the exit and game has been saved
           gui.victoryDisplay();
         } else {
           println("an error has occured");
@@ -141,13 +141,14 @@ class GameBoard {
         initialGameStart = false;
         timerRunning = true; // we may remove this
         readNextMap = true;
-    } else if (key == ENTER && player.wonGame == true) { // player won game and requested next level
+    } else if (key == ENTER && player.wonLevel == true) { // player won game and requested next level
         if ((rawMapNum + 1) >= (numberOfMaps)) {
+          println("completed levels");
           levelsCompleted = true;
         } else {
           rawMapNum += 1; // increase map count to load next map in JSON file
           readNextMap = true; // indicate to read next map
-          player.wonGame = false; // reset player won state
+          player.wonLevel = false; // reset player won state
           player.saveGame = true; // reset save flag for new map
         }
     } else if (key == BACKSPACE && initialGameStart == false) { // Pause game
@@ -157,7 +158,7 @@ class GameBoard {
         } else {
           t.resume();
         }
-    } else if (key == 'q' && levelsCompleted == true) {
+    } else if (key == 'q' && levelsCompleted == true) { // need to check if the player is on the victory screen or complted a level
       output.closeFile();
       exit();
     } else if (key == 'r' && (looseGame == true || levelsCompleted == true)) { // either player lost the game or completed all levels
@@ -205,7 +206,7 @@ class GameBoard {
     readNextMap = false;
   }
 	void mousePressed() {
-    if (!(initialGameStart || pause || player.wonGame || gui.hover))  {
+    if (!(initialGameStart || pause || player.wonLevel || gui.hover))  {
       player.pg.spawnProjectile(player.position);
     }	
     if (gui.clickHover(mouseX,mouseY)) {
