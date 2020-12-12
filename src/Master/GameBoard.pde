@@ -24,6 +24,7 @@ class GameBoard {
 
 	// GUI
 	GUI gui;
+  
 
   //game timer
 	Timer t; // read in new timer
@@ -56,6 +57,15 @@ class GameBoard {
 	
 	// display board
 	void display() {
+    gui.pauseButton();
+    
+    if (gui.mPress == true)
+    { 
+      gui.updateColor(200,200,200);
+    } else {
+      gui.updateColor(255,255,255);
+    }
+  
     if (levelsCompleted) {
       gui.victoryDisplay();
       println("you completed the game!");
@@ -103,6 +113,15 @@ class GameBoard {
         }
       }
 		}
+
+    boolean hovering = gui.clickHover(mouseX, mouseY);
+    if (hovering) {
+      gui.hover = true;
+      gui.updateColor(0,10,200);
+    } else {
+      gui.updateColor(255,255,255);
+      gui.hover = false;
+    }
   }
 	
 	void keyPressed(char k) {
@@ -186,9 +205,24 @@ class GameBoard {
     readNextMap = false;
   }
 	void mousePressed() {
-    if (!(initialGameStart || pause || player.wonGame))  {
+    if (!(initialGameStart || pause || player.wonGame || gui.hover))  {
       player.pg.spawnProjectile(player.position);
     }	
+    if (gui.clickHover(mouseX,mouseY)) {
+      gui.mPress = true;
+      gui.hover = false;
+      if (initialGameStart == false) {
+        pause = !(pause);
+        if (pause == true) {
+          t.stop();
+        } else {
+          t.resume();
+        }
+      }
+      
+    }
+   
+        
 	}
   void restartGame() {
     restart = true; 

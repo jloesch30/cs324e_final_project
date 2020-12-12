@@ -35,3 +35,7 @@ void keyReleased() {
 void mousePressed() {
   g.mousePressed();
 }
+
+void mouseReleased() {
+  g.gui.mPress = false;
+}
