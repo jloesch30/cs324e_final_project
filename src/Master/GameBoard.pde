@@ -38,6 +38,7 @@ class GameBoard {
   int numberOfMaps = 2;
   boolean readNextMap;
   boolean levelsCompleted;
+  boolean restart;
 
 	GameBoard() {
 		pg = new PortalGun();
@@ -50,6 +51,7 @@ class GameBoard {
     rawMapNum = 0;
     readNextMap = false;
     levelsCompleted = false;
+    restart = false;
     objs = new ArrayList<Obstacle>();
 	}
 	
@@ -158,6 +160,8 @@ class GameBoard {
     } else if (key == 'q' && levelsCompleted == true) {
       output.closeFile();
       exit();
+    } else if (key == 'r' && (looseGame == true || levelsCompleted == true)) { // either player lost the game or completed all levels
+      restartGame();
     }
 	}
   void loadMap() {
@@ -220,4 +224,7 @@ class GameBoard {
    
         
 	}
+  void restartGame() {
+    restart = true; 
+  }
 }

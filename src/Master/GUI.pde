@@ -53,10 +53,8 @@ class GUI {
   void defeatDisplay() {
     image(defeat, 25, 100);
   }
-
-  void highScore(float timer) {
-    textSize(20);
-    text("time to beat: " + str(timer), 320, 320);
+ 
+  void highScoreDisplay() {
   }
   void pauseMenu () {
     image(pause, 25, 100);
