@@ -26,6 +26,7 @@ class Portals {
   void display() {
     imageMode(CENTER);
     image(s, x, y);
+    imageMode(CORNER);
   }
   boolean inside (PVector[][] hitBox) {
     PVector hitBoxRight = hitBox[0][1];

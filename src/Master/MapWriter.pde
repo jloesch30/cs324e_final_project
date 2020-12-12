@@ -3,10 +3,10 @@ class MapWriter {
   PrintWriter output;
   
   MapWriter() {
-    output = createWriter("score.txt");
+    output = createWriter("data/score.txt");
   }
   void saveTime(int seconds, int level) {
-    output.println(level + " " + seconds); //<>//
+    output.println(level + " " + seconds);
   }
   void closeFile() {
     output.flush();
