@@ -30,14 +30,6 @@ class GUI {
     text("Level", 220, 25);
   }
 
-  void livesDisplay(int lives) { //done
-    int x = 20;
-    for (int i = 1; i <= lives; i += 1) {
-      shape(life, x, 10, 30, 30);
-      x += 32;
-    }
-  }
-
   void lvlPassed() {
     //for (int i = 0; i <= alphaTxt; i *= -1)  { //setup a timer variable later for fading
     //alphaTxt += i;
@@ -57,9 +49,8 @@ class GUI {
     image(defeat, 25, 100);
   }
   
-  void highScore(float timer) {
-    textSize(20);
-    text("time to beat: " + str(timer), 320,320);
+  void highScoreDisplay() {
+    
   }
   void pauseMenu () {
     image(pause, 25,100);
