@@ -8,15 +8,22 @@ class Obstacle  {
   int w;
   int h;
   
+  // PShape
+  PShape s;
+  PImage texture;
+  
   Obstacle(int _x, int _y, int _w, int _h) {
     x = _x;
     y = _y;
     w = _w;
     h = _h;
+    s = createShape(RECT, x, y, w, h);
+    texture = loadImage("wall_texture.png");
+    s.setTexture(texture);
   }
   
   void display() {
-    rect(x, y, w, h);
+    shape(s);
   }
   
   // returns true of the projectile hits an obstical

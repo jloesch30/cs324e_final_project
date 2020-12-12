@@ -16,6 +16,10 @@ void draw() {
 
   background(backgroundImg);
 	g.display();
+
+  if (g.restart == true) {
+    g = new GameBoard();
+  }
 }
 
 void keyPressed() {
