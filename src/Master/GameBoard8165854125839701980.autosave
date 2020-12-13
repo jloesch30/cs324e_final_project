@@ -192,13 +192,11 @@ class GameBoard { //<>//
     timerRunning = !(timerRunning);
     if (pause == true) {
       t.stop();
-      println("looseGame is: " + looseGame);
     } else {
       t.resume();
     }
   }
   void showPortalGunState() {
-    println("pg.in is: " + pg.in);
     textSize(15);
     textAlign(CORNER);
     if (pgState == true) {
@@ -223,7 +221,7 @@ class GameBoard { //<>//
       player.deactivateActionState(k);
 
       //  GUI keys //<>//
-    } else if (key == ENTER && initialGameStart == true) { // start game //<>//
+    } else if (key == ENTER && initialGameStart == true) { // start game
       initialGameStart = false;
       timerRunning = true; // we may remove this
       readNextMap = true;

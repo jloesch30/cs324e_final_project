@@ -4,6 +4,9 @@ class PortalGun { //<>//
   
   // in and out booleans
   boolean in;
+  
+  // portal gun image
+  PImage pgImg;
 
   // protals (portal object within portal object)
   Portals pIn;
@@ -12,6 +15,10 @@ class PortalGun { //<>//
   PortalGun() {
     // projectiles
     projectiles = new ArrayList<Projectile>();
+    
+    // portal gun image
+    pgImg = loadImage("portalgun.png");
+    pgImg.resize(30,20);
     
     // state of the portals
     in = true;
@@ -36,7 +43,7 @@ class PortalGun { //<>//
       boolean destroy = p.complete();
       if (destroy || hitWall) {
         projectiles.remove(p);
-        if (hitWall) {
+        if (hitWall) { //<>//
           // spawn a portal where the projectile hit object, check where the projectile hit object??
           if (in) {
             pIn = new Portals(p.position.x, p.position.y, true);
@@ -67,9 +74,14 @@ class PortalGun { //<>//
     }
     return false;
   }
-  void displayGun() {
+  void displayGun(boolean[] keys) {
     pushMatrix();
-    rect(0+1, 0, 20, 10);
+    if (keys[0] && (!(keys[1]))) { // flip
+      scale(-1.0, 1.0);
+      image(pgImg, -8, -5);
+    } else {
+      image(pgImg, -8, -5);
+    }
     popMatrix();
   }
   boolean checkPortals(PVector[][] hitBox) {

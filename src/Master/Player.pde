@@ -8,7 +8,7 @@ class Player {
   int currFrame;
   PImage[] currAnimation;
   boolean runningLeft, runningRight, running, jump, idle;
-  boolean keys[]; // [0]: runLeft [1]: runRight [2] jump
+  boolean[] keys; // [0]: runLeft [1]: runRight [2] jump
   Animations animations;
 
   // forces and position
@@ -87,7 +87,7 @@ class Player {
     pushMatrix();
     pg.display(objs); // 2 levels of higharchy
     translate(position.x, position.y);
-    pg.displayGun(); // show an image of the gun
+    pg.displayGun(keys); // show an image of the gun
     if (keys[0] && keys[1]) {
       scale(1.0, 1.0);
     } else if (keys[0]) { // player moving left, flip position to mimic turn around
@@ -97,6 +97,7 @@ class Player {
     }
     animate(objs, e);
     popMatrix();
+    
   }
   void deactivateActionState(char k) {
     if (k == ' ') {
