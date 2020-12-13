@@ -1,4 +1,4 @@
-class ScoreReader {
+class ScoreReader { //<>//
   BufferedReader reader;
   ArrayList<String> s = new ArrayList<String>(); // array of strings
   String line;
@@ -9,7 +9,7 @@ class ScoreReader {
   
   void parseFile() {
     try {
-      while ((line = reader.readLine()) != null) { //<>//
+      while ((line = reader.readLine()) != null) {
         println(line);
         s.add(line);
       }

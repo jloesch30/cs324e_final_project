@@ -15,7 +15,7 @@ class GUI {
   boolean mPress = false;
   boolean hover = false;
   color col = color(0,0,0);
-  float x = 300;
+  float x = 460;
   float y = 10;
   float w = 30;
   float h = 30;
@@ -42,9 +42,16 @@ class GUI {
     text(str(lvls), 250, 71);
     fill(255, 93, 0); //orange
     textSize(25);
-    text("Level", 220, 25);
+    text("Level", 250, 25);
+    fill(255); // white (revert back)
   }
 
+  void timeDisplay(float time) {
+    textSize(20);
+    text(str(time), 370, 30);
+    textSize(15);
+    text("seconds left", 370, 50);
+  }
   void lvlPassed() {
     textAlign(CENTER);
     textSize(40);

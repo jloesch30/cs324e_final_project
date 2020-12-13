@@ -3,9 +3,9 @@ GameBoard g;
 PImage backgroundImg;
 
 void setup() {
-	// game set-up
-	g = new GameBoard();
-	size(500, 500);
+  // game set-up
+  g = new GameBoard();
+  size(500, 500);
   backgroundImg = loadImage("background.png");
   backgroundImg.resize(500,500);
   //r = new MapReader();
@@ -15,7 +15,7 @@ void setup() {
 void draw() {
 
   background(backgroundImg);
-	g.display();
+  g.display();
 
   if (g.restart == true) {
     g = new GameBoard();
@@ -23,8 +23,8 @@ void draw() {
 }
 
 void keyPressed() {
-	char k = key;
-	g.keyPressed(k);
+  char k = key;
+  g.keyPressed(k);
 }
 
 void keyReleased() {

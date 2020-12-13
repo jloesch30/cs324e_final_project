@@ -1,4 +1,4 @@
-class GameBoard {
+class GameBoard { //<>//
   // map reader and writer
   MapReader r;
   MapWriter output;
@@ -41,6 +41,8 @@ class GameBoard {
   boolean levelsCompleted;
   boolean restart;
   boolean showScore;
+  boolean exitSketch = false;
+  int timeElapsed = 0;
 
   GameBoard() {
     pg = new PortalGun();
@@ -61,7 +63,6 @@ class GameBoard {
 
   // display board
   void display() {
-    gui.pauseButton();
 
     if (gui.mPress == true)
     {
@@ -84,7 +85,7 @@ class GameBoard {
 
       //timer
       if (timerRunning) {
-        int timeElapsed = t.second();
+        timeElapsed = t.second();
         if (timeElapsed >= maxTimeAllowed) {
           looseGame = true;
         }
@@ -96,16 +97,23 @@ class GameBoard {
         // note: timer is handled in the button press
         gui.pauseMenu();
         println("looseGame in the else if is: " + looseGame);
+        if (exitSketch){
+          exit(); 
+        }
       } else {
+        gui.pauseButton();
+        gui.levelDisplay(realMapNum);
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           player.display(objs, e);
           showPortalGunState();
+          gui.timeDisplay(maxTimeAllowed - timeElapsed);
           for (Obstacle o : objs) {
             o.display(); // display the objects
             e.display(); // display the exit
           }
         } else { // loosegame == true or player.wonLevel == true
           if (looseGame) {
+            t.stop();
             gui.defeatDisplay();
           } else if (player.wonLevel && player.saveGame) {
             t.stop(); // stop the time
@@ -131,6 +139,12 @@ class GameBoard {
       }
     }
   }
+  
+  
+  void draw() {
+  line(mouseX, mouseY, 50, 50);
+}
+
   void loadMap() {
     println("raw map num is : " + rawMapNum);
     //remove objects if nessisary
@@ -200,6 +214,8 @@ class GameBoard {
     } else if (k == '1') { 
       player.pg.changeState();
       pgState = !(pgState);
+    } else if (k == 'x'){
+      exitSketch = true;
     }
   }
   void keyReleased(char k) {
@@ -207,7 +223,7 @@ class GameBoard {
     if (k == 'a' || k == 'd' || k == ' ') { // character movement released
       player.deactivateActionState(k);
 
-      //  GUI keys
+      //  GUI keys //<>//
     } else if (key == ENTER && initialGameStart == true) { // start game
       initialGameStart = false;
       timerRunning = true; // we may remove this
@@ -223,7 +239,7 @@ class GameBoard {
         player.saveGame = true; // reset save flag for new map
       }
     } else if (key == BACKSPACE && initialGameStart == false && player.wonLevel == false) { // Pause game
-      pauseGame(); //<>//
+      pauseGame();
     } else if (key == 'q' && levelsCompleted == true) { // need to check if the player is on the victory screen or complted a level
       showScore = true;
     } else if (key == 'r' && (looseGame == true || levelsCompleted == true || pause == true)) { // either player lost the game or completed all levels
