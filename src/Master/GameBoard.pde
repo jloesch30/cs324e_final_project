@@ -103,10 +103,10 @@ class GameBoard { //<>//
       } else {
         gui.pauseButton();
         gui.levelDisplay(realMapNum);
-        gui.timeDisplay(maxTimeAllowed - timeElapsed);
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           player.display(objs, e);
           showPortalGunState();
+          gui.timeDisplay(maxTimeAllowed - timeElapsed);
           for (Obstacle o : objs) {
             o.display(); // display the objects
             e.display(); // display the exit
@@ -223,7 +223,7 @@ class GameBoard { //<>//
     if (k == 'a' || k == 'd' || k == ' ') { // character movement released
       player.deactivateActionState(k);
 
-      //  GUI keys
+      //  GUI keys //<>//
     } else if (key == ENTER && initialGameStart == true) { // start game
       initialGameStart = false;
       timerRunning = true; // we may remove this
