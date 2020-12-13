@@ -41,6 +41,7 @@ class GameBoard {
   boolean levelsCompleted;
   boolean restart;
   boolean showScore;
+  boolean exitSketch = false;
 
   GameBoard() {
     pg = new PortalGun();
@@ -61,7 +62,6 @@ class GameBoard {
 
   // display board
   void display() {
-    gui.pauseButton();
 
     if (gui.mPress == true)
     {
@@ -96,7 +96,11 @@ class GameBoard {
         // note: timer is handled in the button press
         gui.pauseMenu();
         println("looseGame in the else if is: " + looseGame);
+        if (exitSketch){
+          exit(); 
+        }
       } else {
+        gui.pauseButton();
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           player.display(objs, e);
           showPortalGunState();
@@ -131,6 +135,12 @@ class GameBoard {
       }
     }
   }
+  
+  
+  void draw() {
+  line(mouseX, mouseY, 50, 50);
+}
+
   void loadMap() {
     println("raw map num is : " + rawMapNum);
     //remove objects if nessisary
@@ -200,6 +210,8 @@ class GameBoard {
     } else if (k == '1') { 
       player.pg.changeState();
       pgState = !(pgState);
+    } else if (k == 'x'){
+      exitSketch = true;
     }
   }
   void keyReleased(char k) {
