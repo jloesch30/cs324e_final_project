@@ -96,15 +96,18 @@ class GameBoard { //<>//
       } else if (pause) {
         // note: timer is handled in the button press
         gui.pauseMenu();
+        gui.exitButton();
         println("looseGame in the else if is: " + looseGame);
         if (exitSketch){
           exit(); 
         }
       } else {
-        gui.pauseButton();
-        gui.levelDisplay(realMapNum);
-        gui.timeDisplay(maxTimeAllowed - timeElapsed);
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
+          gui.pauseButton();
+          gui.exitButton();
+          gui.muteButton();
+          gui.levelDisplay(realMapNum);
+          gui.timeDisplay(maxTimeAllowed - timeElapsed);
           player.display(objs, e);
           showPortalGunState();
           for (Obstacle o : objs) {
@@ -115,6 +118,7 @@ class GameBoard { //<>//
           if (looseGame) {
             t.stop();
             gui.defeatDisplay();
+            gui.exitButton();
           } else if (player.wonLevel && player.saveGame) {
             t.stop(); // stop the time
             output.saveTime(t.second(), realMapNum); // save the time here
@@ -256,6 +260,9 @@ class GameBoard { //<>//
       if (initialGameStart == false && player.wonLevel == false) {
         pauseGame(); // pause the game
       }
-    }
+      if (exitSketch == false) {
+        exit();
+      }
+  }
   }
 }

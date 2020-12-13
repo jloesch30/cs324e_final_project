@@ -9,6 +9,8 @@ class GUI {
   PImage defeat;
   PImage pause;
   PImage pauseButton;
+  PImage exitButton;
+  PImage muteButton;
   //PImage pause; //this might be a keypress
   int alphaTxt = 100;
   int fadeTime = 2;
@@ -27,6 +29,8 @@ class GUI {
     menu = loadImage("mainMenu.png");
     pause = loadImage("paused.png");
     pauseButton = loadImage("pauseButton.png");
+    exitButton = loadImage("exitButton.png");
+    muteButton = loadImage("muteButton.png");
     
     // line spacing for scores
     paddingMult = 1.2;
@@ -112,9 +116,30 @@ class GUI {
       fill(col);
       ellipse(x,y,w,h);
     }
-    fill(255); //changes all the other objects back to white and keep the if changes of orange limited to pause
+    fill(255); //changes all the other objects back to white and keep the if changes of orange limited to button
     image(pauseButton, x, y, w, h);
   }
+  
+
+    void exitButton () {
+    ellipseMode(CORNER);
+      fill(col);
+      ellipse(x,y + 40,w,h);
+   
+    fill(255); 
+    //changes all the other objects back to white and keep the if changes of orange limited to button
+    image(exitButton, x, y + 40, w, h);
+  }
+  
+    void muteButton () {
+    ellipseMode(CORNER);
+      fill(col);
+      ellipse(x,y + 80,w,h);
+
+    fill(255); //changes all the other objects back to white and keep the if changes of orange limited to button
+    image(muteButton, x, y + 80, w, h);
+  }
+  
   boolean clickHover(int mx, int my) { //
     return (mx >= x && mx <= x+w && my >= y && my <= y+h);
   }
