@@ -96,7 +96,7 @@ class GUI {
     }
   }
   void pauseMenu () {
-    image(pause, 25, 100);
+    image(pause, 15, 100);
   }
 
   // pause button and display when it get clicked on and pause display

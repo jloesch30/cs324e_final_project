@@ -198,7 +198,6 @@ class GameBoard { //<>//
     }
   }
   void showPortalGunState() {
-    println("pg.in is: " + pg.in);
     textSize(15);
     textAlign(CORNER);
     if (pgState == true) {
@@ -224,7 +223,7 @@ class GameBoard { //<>//
 
       //  GUI keys //<>//
     } else if (key == ENTER && initialGameStart == true) { // start game //<>//
-      initialGameStart = false;
+      initialGameStart = false; //<>//
       timerRunning = true; // we may remove this
       readNextMap = true;
     } else if (key == ENTER && player.wonLevel == true) { // player won game and requested next level
