@@ -29,7 +29,7 @@ class GUI {
     pauseButton = loadImage("pauseButton.png");
     
     // line spacing for scores
-    paddingMult = 1.5;
+    paddingMult = 1.2;
     scorePosition = height/2;
     score = new ScoreReader();
   }
@@ -57,6 +57,10 @@ class GUI {
     imageMode(CENTER);
     image(menu, width/2 - 20, height/2);
     imageMode(CORNER);
+    textAlign(CENTER);
+    textSize(30);
+    text("Press ENTER to start", width/2, 450);
+    textAlign(CORNER);
   }
   void victoryDisplay() {
     imageMode(CENTER);
@@ -71,9 +75,12 @@ class GUI {
     if (score.s.size() == 0) {
       score.parseFile();
     } else {
+      textAlign(CENTER);
+      textSize(20);
+      text("Level", 220, height/2 - 30);
+      text("Time", 280, height/2 - 30);
       // display the scores here
       for (String s : score.s) {
-        println("reading scores");
         text(s, width/2, scorePosition);
         scorePosition *= paddingMult;
       }

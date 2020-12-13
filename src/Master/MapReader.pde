@@ -16,7 +16,7 @@ class MapReader {
     player_spawn = map.getJSONObject("player_spawn");
     objs = map.getJSONArray("obstacles");
     exit = map.getJSONObject("exit");
-    printMapInfo();
+    //printMapInfo();
   }
   void printMapInfo() {
     println("currMap:" + currMap);

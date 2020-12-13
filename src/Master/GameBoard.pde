@@ -6,6 +6,7 @@ class GameBoard {
   // player, protal gun, and portals
   Player player; // read in
   PortalGun pg;
+  boolean pgState;
 
   //Portals port;
   float playerPosX; // read in
@@ -39,9 +40,11 @@ class GameBoard {
   boolean readNextMap;
   boolean levelsCompleted;
   boolean restart;
+  boolean showScore;
 
   GameBoard() {
     pg = new PortalGun();
+    pgState = true;
     gui = new GUI();
     r = new MapReader();
     output = new MapWriter();
@@ -52,6 +55,7 @@ class GameBoard {
     readNextMap = false;
     levelsCompleted = false;
     restart = false;
+    showScore = false;
     objs = new ArrayList<Obstacle>();
   }
 
@@ -66,9 +70,12 @@ class GameBoard {
       gui.updateColor(255, 255, 255);
     }
 
-    if (levelsCompleted) { // all levels completed
+    if (levelsCompleted && (!(showScore))) { // all levels completed
+      gui.victoryDisplay();
+      output.closeFile(); // close writer
+    } else if (levelsCompleted && showScore) {
       gui.highScoreDisplay();
-    } else { // player still plaiying
+    } else { // player still playing
       // read in a map if needed
       if (readNextMap) {
         loadMap();
@@ -92,6 +99,7 @@ class GameBoard {
       } else {
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           player.display(objs, e);
+          showPortalGunState();
           for (Obstacle o : objs) {
             o.display(); // display the objects
             e.display(); // display the exit
@@ -176,11 +184,22 @@ class GameBoard {
       t.resume();
     }
   }
+  void showPortalGunState() {
+    println("pg.in is: " + pg.in);
+    textSize(15);
+    textAlign(CORNER);
+    if (pgState == true) {
+      text("Portal gun state: IN", 10, 30);
+    } else if (pgState == false) {
+      text("Portal gun state: OUT", 10, 30);
+    }
+  }
   void keyPressed(char k) {
     if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
       player.activateActionState(k);
     } else if (k == '1') { 
       player.pg.changeState();
+      pgState = !(pgState);
     }
   }
   void keyReleased(char k) {
@@ -206,9 +225,8 @@ class GameBoard {
     } else if (key == BACKSPACE && initialGameStart == false && player.wonLevel == false) { // Pause game
       pauseGame(); //<>//
     } else if (key == 'q' && levelsCompleted == true) { // need to check if the player is on the victory screen or complted a level
-      output.closeFile();
-      exit();
-    } else if (key == 'r' && (looseGame == true || levelsCompleted == true)) { // either player lost the game or completed all levels
+      showScore = true;
+    } else if (key == 'r' && (looseGame == true || levelsCompleted == true || pause == true)) { // either player lost the game or completed all levels
       restartGame();
     }
   }
