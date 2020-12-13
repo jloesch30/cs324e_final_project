@@ -146,7 +146,6 @@ class GameBoard { //<>//
 }
 
   void loadMap() {
-    println("raw map num is : " + rawMapNum);
     //remove objects if nessisary
     if (objs != null && objs.size() > 0) {
       objs.clear();
@@ -224,7 +223,7 @@ class GameBoard { //<>//
       player.deactivateActionState(k);
 
       //  GUI keys //<>//
-    } else if (key == ENTER && initialGameStart == true) { // start game
+    } else if (key == ENTER && initialGameStart == true) { // start game //<>//
       initialGameStart = false;
       timerRunning = true; // we may remove this
       readNextMap = true;

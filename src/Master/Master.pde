@@ -7,19 +7,18 @@ void setup() {
   g = new GameBoard();
   size(500, 500);
   backgroundImg = loadImage("background.png");
-  backgroundImg.resize(500,500);
+  backgroundImg.resize(500, 500);
   //r = new MapReader();
   //r.readMap(0);
 }
 
 void draw() {
-
-  background(backgroundImg);
-  g.display();
-
   if (g.restart == true) {
     g = new GameBoard();
   }
+
+  background(backgroundImg);  
+  g.display();
 }
 
 void keyPressed() {

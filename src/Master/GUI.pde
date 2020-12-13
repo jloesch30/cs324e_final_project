@@ -79,6 +79,7 @@ class GUI {
     image(defeat, 25, 100);
   }
   void highScoreDisplay() {
+    fill(50);
     if (score.s.size() == 0) {
       score.parseFile();
     } else {
