@@ -46,7 +46,8 @@ class GUI {
     text(str(lvls), 250, 71);
     fill(255, 93, 0); //orange
     textSize(25);
-    text("Level", 220, 25);
+    text("Level", 250, 25);
+    fill(255); // white (revert back)
   }
 
   void timeDisplay(float time) {
@@ -82,6 +83,7 @@ class GUI {
     image(defeat, 25, 100);
   }
   void highScoreDisplay() {
+    fill(50);
     if (score.s.size() == 0) {
       score.parseFile();
     } else {

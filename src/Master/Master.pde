@@ -14,6 +14,7 @@ void setup() {
   size(500, 500);
   backgroundImg = loadImage("background.png");
   backgroundImg.resize(500, 500);
+  testbranchmarilia
   sound = new GameSound(this);
   //r = new MapReader();
   //r.readMap(0);
@@ -35,6 +36,9 @@ void draw() {
   if (g.restart == true) {
     g = new GameBoard();
   }
+
+  background(backgroundImg);  
+  g.display();
 }
 void mousePressed() {
   g.mousePressed();
