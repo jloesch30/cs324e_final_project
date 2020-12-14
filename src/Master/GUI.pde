@@ -87,11 +87,12 @@ class GUI {
     } else {
       textAlign(CENTER);
       textSize(20);
-      text("Level", 220, height/2 - 30);
-      text("Time", 280, height/2 - 30);
+      //text("Level", 210, height/2 - 30);
+      //text("Time", 280, height/2 - 30);
       // display the scores here
       for (String s : score.s) {
-        text(s, width/2, scorePosition);
+        text("Time for level "+ s + " seconds", width/2, scorePosition);
+        
         scorePosition *= paddingMult;
       }
       scorePosition = height/2; 
