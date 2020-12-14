@@ -24,14 +24,6 @@ void setup() {
 void draw() {
   background(backgroundImg);
   g.display();
-  //gui.muteButton();
-
-  //if(music == true){
-  //  hoverMute
-
-
-  //} 
-
   if (g.restart == true) {
     g = new GameBoard();
   }
@@ -54,7 +46,6 @@ void mousePressed() {
     }
   }
 }
-
 void keyPressed() {
   char k = key;
   g.keyPressed(k);
@@ -64,9 +55,6 @@ void keyReleased() {
   char k = key;
   g.keyReleased(k);
 }
-
-
-
 void mouseReleased() {
   g.gui.mPress = false;
   gui.mPress = false;

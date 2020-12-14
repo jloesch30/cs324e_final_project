@@ -1,4 +1,4 @@
- //<>//
+//<>//
 class GameBoard {
   // map reader and writer
   MapReader r;
@@ -100,7 +100,6 @@ class GameBoard {
       } else if (pause) {
         // note: timer is handled in the button press
         gui.pauseMenu();
-        gui.exitButton();
 
         println("looseGame in the else if is: " + looseGame);
         //if (exitSketch){
@@ -112,7 +111,6 @@ class GameBoard {
         gui.levelDisplay(realMapNum);
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           gui.pauseButton();
-          gui.exitButton();
           gui.levelDisplay(realMapNum);
           gui.timeDisplay(maxTimeAllowed - timeElapsed);
           player.display(objs, e);
@@ -151,11 +149,11 @@ class GameBoard {
       }
     }
   }
-  
-  
+
+
   void draw() {
-  line(mouseX, mouseY, 50, 50);
-}
+    line(mouseX, mouseY, 50, 50);
+  }
 
   void loadMap() {
     //remove objects if nessisary
@@ -223,12 +221,12 @@ class GameBoard {
     }
   }
   void keyPressed(char k) {
-    if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed //<>//
+    if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
       player.activateActionState(k);
-    } else if (k == '1') { 
+    } else if (k == '1') {  //<>//
       player.pg.changeState();
       pgState = !(pgState);
-    } else if (k == 'x'){
+    } else if (k == 'x') {
       exitSketch = true;
     }
   }
@@ -236,7 +234,7 @@ class GameBoard {
     //movement keys
     if (k == 'a' || k == 'd' || k == ' ') { // character movement released
       player.deactivateActionState(k);
- //<>//
+      //<>//
       //  GUI keys //<>//
     } else if (key == ENTER && initialGameStart == true) { // start game //<>//
       initialGameStart = false; //<>//
@@ -269,15 +267,11 @@ class GameBoard {
       gui.hover = false;
       if (initialGameStart == false && player.wonLevel == false) {
         pauseGame(); // pause the game
-      }
-      
-      else if (gui.hoverExit(mouseX, mouseY)) {
-      gui.mPress = true;
-      gui.hover = false;
+      } else if (gui.hoverExit(mouseX, mouseY)) {
+        gui.mPress = true;
+        gui.hover = false;
         exit();
-      
-      
-  }
-  }
+      }
+    }
   }
 }
