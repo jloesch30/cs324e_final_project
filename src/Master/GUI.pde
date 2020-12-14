@@ -122,25 +122,39 @@ class GUI {
   
 
     void exitButton () {
-    ellipseMode(CORNER);
-      fill(col);
-      ellipse(x,y + 40,w,h);
+    //ellipseMode(CORNER);
+    //  fill(col);
+    //  ellipse(x,y + 40,w,h);
    
-    fill(255); 
+    //fill(255); 
     //changes all the other objects back to white and keep the if changes of orange limited to button
     image(exitButton, x, y + 40, w, h);
   }
   
     void muteButton () {
-    ellipseMode(CORNER);
-      fill(col);
-      ellipse(x,y + 80,w,h);
+    //ellipseMode(CORNER);
+      //fill(col);
+      //ellipse(x - 400,y,w,h);
 
-    fill(255); //changes all the other objects back to white and keep the if changes of orange limited to button
-    image(muteButton, x, y + 80, w, h);
+    //fill(255); //changes all the other objects back to white and keep the if changes of orange limited to button
+    image(muteButton, x - 400, y, w, h);
   }
   
   boolean clickHover(int mx, int my) { //
     return (mx >= x && mx <= x+w && my >= y && my <= y+h);
   }
+  boolean hoverMute(int mx, int my) { //
+    boolean vari = (mx >= (x - 400) && mx <= (x - 400)+w && my >= y && my <= y+h);
+
+    return vari;
+    
+  }
+  
+  boolean hoverExit(int mx, int my) { //
+    boolean vari2 =  (mx >= x && mx <= x+w && my >= (y + 40) && my <= (y + 40) + h);
+    println(vari2);
+    return vari2;
+  }
+  
+  
 }

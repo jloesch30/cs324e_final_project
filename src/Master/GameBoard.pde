@@ -1,12 +1,15 @@
-class GameBoard { //<>//
+ //<>//
+class GameBoard {
   // map reader and writer
   MapReader r;
   MapWriter output;
+
 
   // player, protal gun, and portals
   Player player; // read in
   PortalGun pg;
   boolean pgState;
+
 
   //Portals port;
   float playerPosX; // read in
@@ -93,19 +96,20 @@ class GameBoard { //<>//
 
       if (initialGameStart) {
         gui.mainMenu();
+        gui.muteButton();
       } else if (pause) {
         // note: timer is handled in the button press
         gui.pauseMenu();
         gui.exitButton();
+
         println("looseGame in the else if is: " + looseGame);
-        if (exitSketch){
-          exit(); 
-        }
+        //if (exitSketch){
+        //  exit(); 
+        //}
       } else {
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           gui.pauseButton();
           gui.exitButton();
-          gui.muteButton();
           gui.levelDisplay(realMapNum);
           gui.timeDisplay(maxTimeAllowed - timeElapsed);
           player.display(objs, e);
@@ -119,6 +123,7 @@ class GameBoard { //<>//
             t.stop();
             gui.defeatDisplay();
             gui.exitButton();
+            gui.muteButton();
           } else if (player.wonLevel && player.saveGame) {
             t.stop(); // stop the time
             output.saveTime(t.second(), realMapNum); // save the time here
@@ -260,9 +265,14 @@ class GameBoard { //<>//
       if (initialGameStart == false && player.wonLevel == false) {
         pauseGame(); // pause the game
       }
-      if (exitSketch == false) {
+      
+      else if (gui.hoverExit(mouseX, mouseY)) {
+      gui.mPress = true;
+      gui.hover = false;
         exit();
-      }
+      
+      
+  }
   }
   }
 }
