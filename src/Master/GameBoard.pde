@@ -96,7 +96,6 @@ class GameBoard { //<>//
       } else if (pause) {
         // note: timer is handled in the button press
         gui.pauseMenu();
-        println("looseGame in the else if is: " + looseGame);
         if (exitSketch){
           exit(); 
         }
@@ -179,6 +178,11 @@ class GameBoard { //<>//
     int exitY = r.exit.getInt("y");
     int exitW = r.exit.getInt("w");
     int exitH = r.exit.getInt("h");
+    println("exit info is:");
+    println(exitX);
+    println(exitY);
+    println(exitW);
+    println(exitH);
     e = new Exit(exitX, exitY, exitW, exitH);
 
     //change game state
@@ -192,7 +196,6 @@ class GameBoard { //<>//
     timerRunning = !(timerRunning);
     if (pause == true) {
       t.stop();
-      println("looseGame is: " + looseGame);
     } else {
       t.resume();
     }
@@ -220,7 +223,7 @@ class GameBoard { //<>//
     //movement keys
     if (k == 'a' || k == 'd' || k == ' ') { // character movement released
       player.deactivateActionState(k);
-
+ //<>//
       //  GUI keys //<>//
     } else if (key == ENTER && initialGameStart == true) { // start game //<>//
       initialGameStart = false; //<>//
