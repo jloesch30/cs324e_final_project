@@ -110,7 +110,7 @@ class GameBoard {
 
         gui.pauseButton();
         gui.levelDisplay(realMapNum);
-        bugFixes
+        //bugFixes
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           gui.pauseButton();
           gui.exitButton();
