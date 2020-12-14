@@ -147,9 +147,7 @@ class GUI {
   }
   boolean hoverMute(int mx, int my) { //
     boolean vari = (mx >= (x - 400) && mx <= (x - 400)+w && my >= y && my <= y+h);
-
     return vari;
-    
   }
   
   boolean hoverExit(int mx, int my) { //

@@ -110,7 +110,6 @@ class GameBoard {
 
         gui.pauseButton();
         gui.levelDisplay(realMapNum);
-        bugFixes
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
           gui.pauseButton();
           gui.exitButton();
@@ -118,7 +117,6 @@ class GameBoard {
           gui.timeDisplay(maxTimeAllowed - timeElapsed);
           player.display(objs, e);
           showPortalGunState();
-          gui.timeDisplay(maxTimeAllowed - timeElapsed);
           for (Obstacle o : objs) {
             o.display(); // display the objects
             e.display(); // display the exit
@@ -225,7 +223,7 @@ class GameBoard {
     }
   }
   void keyPressed(char k) {
-    if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
+    if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed //<>//
       player.activateActionState(k);
     } else if (k == '1') { 
       player.pg.changeState();
