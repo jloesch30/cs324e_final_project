@@ -11,6 +11,7 @@ class GUI {
   PImage pauseButton;
   PImage exitButton;
   PImage muteButton;
+  PImage highScore;
   //PImage pause; //this might be a keypress
   int alphaTxt = 100;
   int fadeTime = 2;
@@ -31,6 +32,7 @@ class GUI {
     pauseButton = loadImage("pauseButton.png");
     exitButton = loadImage("exitButton.png");
     muteButton = loadImage("muteButton.png");
+    highScore = loadImage("highScore.png");
     
     // line spacing for scores
     paddingMult = 1.2;
@@ -83,6 +85,7 @@ class GUI {
     image(defeat, 25, 100);
   }
   void highScoreDisplay() {
+    image(highScore, 25, 90);
     fill(50);
     if (score.s.size() == 0) {
       score.parseFile();
@@ -98,6 +101,7 @@ class GUI {
       }
       scorePosition = height/2; 
     }
+    text("Press R to play again!", width/2, 450);
   }
   void pauseMenu () {
     image(pause, 15, 100);
