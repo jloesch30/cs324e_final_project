@@ -1,4 +1,4 @@
-// Master file - this module will run the entire game //<>//
+// Master file - this module will run the entire game //<>// //<>//
 import processing.sound.*;
 GameSound sound;
 GUI gui;
@@ -8,6 +8,7 @@ PImage backgroundImg;
 boolean music;
 
 void setup() {
+  frameRate(60);
   // game set-up
   g = new GameBoard();
   gui = new GUI();

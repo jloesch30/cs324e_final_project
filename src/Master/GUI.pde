@@ -152,7 +152,6 @@ class GUI {
   
   boolean hoverExit(int mx, int my) { //
     boolean vari2 =  (mx >= x && mx <= x+w && my >= (y + 40) && my <= (y + 40) + h);
-    println(vari2);
     return vari2;
   }
   

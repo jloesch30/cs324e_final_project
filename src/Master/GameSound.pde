@@ -5,17 +5,12 @@ class GameSound {
     clickSound = new SoundFile(p, "gameSound.wav");
     clickSound.amp(0.5);
   }
-
   void play() {
     clickSound.play();
   }
-  
-  
     void pause() {
     clickSound.pause();
   }
-
-
     void loop() {
     clickSound.loop();
   }

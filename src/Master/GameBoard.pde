@@ -1,4 +1,4 @@
-//<>//
+//<>// //<>//
 class GameBoard {
   // map reader and writer
   MapReader r;
@@ -100,11 +100,6 @@ class GameBoard {
       } else if (pause) {
         // note: timer is handled in the button press
         gui.pauseMenu();
-
-        println("looseGame in the else if is: " + looseGame);
-        //if (exitSketch){
-        //  exit(); 
-        //}
       } else {
 
         gui.pauseButton();
@@ -176,7 +171,6 @@ class GameBoard {
     for (int i = 0; i < r.objs.size(); i++) {
       JSONObject obstacle = r.objs.getJSONObject(i);
       JSONObject o = obstacle.getJSONObject("obstacle_" + nf(i + 1, 0));
-      println("object being read in is : " + o);
       int objX = o.getInt("x");
       int objY = o.getInt("y");
       int objW = o.getInt("w"); 
@@ -189,11 +183,6 @@ class GameBoard {
     int exitY = r.exit.getInt("y");
     int exitW = r.exit.getInt("w");
     int exitH = r.exit.getInt("h");
-    println("exit info is:");
-    println(exitX);
-    println(exitY);
-    println(exitW);
-    println(exitH);
     e = new Exit(exitX, exitY, exitW, exitH);
 
     //change game state
@@ -221,7 +210,7 @@ class GameBoard {
     }
   }
   void keyPressed(char k) {
-    if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
+    if ((k == 'a' || k == 'd' || k == ' ') && (initialGameStart == false)) { // character movement pressed
       player.activateActionState(k);
     } else if (k == '1') {  //<>//
       player.pg.changeState();
@@ -232,7 +221,7 @@ class GameBoard {
   }
   void keyReleased(char k) {
     //movement keys
-    if (k == 'a' || k == 'd' || k == ' ') { // character movement released
+    if ((k == 'a' || k == 'd' || k == ' ') && (initialGameStart == false)) { // character movement released
       player.deactivateActionState(k);
       //<>//
       //  GUI keys //<>//
@@ -247,8 +236,8 @@ class GameBoard {
       } else {
         rawMapNum += 1; // increase map count to load next map in JSON file
         readNextMap = true; // indicate to read next map
-        player.wonLevel = false; // reset player won state
-        player.saveGame = true; // reset save flag for new map
+        player.wonLevel = false; // reset player won state //<>//
+        player.saveGame = true; // reset save flag for new map //<>//
       }
     } else if (key == BACKSPACE && initialGameStart == false && player.wonLevel == false) { // Pause game
       pauseGame();

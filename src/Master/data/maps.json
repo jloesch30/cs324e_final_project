@@ -1,7 +1,7 @@
 [
   {
     "map": 1,
-    "max_time": 100,
+    "max_time": 20,
     "player_spawn": {
       "x": 60,
       "y": 400
@@ -65,7 +65,7 @@
   },
   {
     "map": 2,
-    "max_time": 100,
+    "max_time": 20,
     "player_spawn": {
       "x": 100,
       "y": 300

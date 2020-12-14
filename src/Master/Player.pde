@@ -265,8 +265,6 @@ class Player {
   }
 }
 
-
-
 /* jump key combos */
 
 //} else if (keys[0] && !(keys[1]) && keys[2]) { // left, jump pressed
