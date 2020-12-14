@@ -9,8 +9,7 @@ class ScoreReader { //<>//
   
   void parseFile() {
     try {
-      while ((line = reader.readLine()) != null) {
-        println(line);
+      while ((line = reader.readLine()) != null) { //<>//
         s.add(line);
       }
       reader.close();

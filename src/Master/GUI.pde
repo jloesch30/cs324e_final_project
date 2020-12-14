@@ -9,6 +9,9 @@ class GUI {
   PImage defeat;
   PImage pause;
   PImage pauseButton;
+  PImage exitButton;
+  PImage muteButton;
+  PImage highScore;
   //PImage pause; //this might be a keypress
   int alphaTxt = 100;
   int fadeTime = 2;
@@ -27,6 +30,9 @@ class GUI {
     menu = loadImage("mainMenu.png");
     pause = loadImage("paused.png");
     pauseButton = loadImage("pauseButton.png");
+    exitButton = loadImage("exitButton.png");
+    muteButton = loadImage("muteButton.png");
+    highScore = loadImage("highScore.png");
     
     // line spacing for scores
     paddingMult = 1.2;
@@ -79,6 +85,7 @@ class GUI {
     image(defeat, 25, 100);
   }
   void highScoreDisplay() {
+    image(highScore, 25, 90);
     fill(50);
     if (score.s.size() == 0) {
       score.parseFile();
@@ -94,9 +101,10 @@ class GUI {
       }
       scorePosition = height/2; 
     }
+    text("Press R to play again!", width/2, 450);
   }
   void pauseMenu () {
-    image(pause, 25, 100);
+    image(pause, 15, 100);
   }
 
   // pause button and display when it get clicked on and pause display
@@ -114,10 +122,42 @@ class GUI {
       fill(col);
       ellipse(x,y,w,h);
     }
-    fill(255); //changes all the other objects back to white and keep the if changes of orange limited to pause
+    fill(255); //changes all the other objects back to white and keep the if changes of orange limited to button
     image(pauseButton, x, y, w, h);
   }
+  
+
+    void exitButton () {
+    //ellipseMode(CORNER);
+    //  fill(col);
+    //  ellipse(x,y + 40,w,h);
+   
+    //fill(255); 
+    //changes all the other objects back to white and keep the if changes of orange limited to button
+    image(exitButton, x, y + 40, w, h);
+  }
+  
+    void muteButton () {
+    //ellipseMode(CORNER);
+      //fill(col);
+      //ellipse(x - 400,y,w,h);
+
+    //fill(255); //changes all the other objects back to white and keep the if changes of orange limited to button
+    image(muteButton, x - 400, y, w, h);
+  }
+  
   boolean clickHover(int mx, int my) { //
     return (mx >= x && mx <= x+w && my >= y && my <= y+h);
   }
+  boolean hoverMute(int mx, int my) { //
+    boolean vari = (mx >= (x - 400) && mx <= (x - 400)+w && my >= y && my <= y+h);
+    return vari;
+  }
+  
+  boolean hoverExit(int mx, int my) { //
+    boolean vari2 =  (mx >= x && mx <= x+w && my >= (y + 40) && my <= (y + 40) + h);
+    return vari2;
+  }
+  
+  
 }

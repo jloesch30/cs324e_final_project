@@ -98,6 +98,7 @@ class Player {
     animate(objs, e);
     popMatrix();
     
+    
   }
   void deactivateActionState(char k) {
     if (k == ' ') {
@@ -263,8 +264,6 @@ class Player {
     return false;
   }
 }
-
-
 
 /* jump key combos */
 

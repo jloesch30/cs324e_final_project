@@ -1,0 +1,47 @@
+PROJECT DESCRIPTION
+
+For our final project, we decided to recreate a video game called "Portal".
+In our version of Portal, the player must use a portal gun to shoot "in" and "out"
+portals which he uses to transport himself throughout the obstacle course.
+We incorporated a projectile animation for our portal fun and its ammo, as well as animation
+for the sprite to travel and move throughout the obstacle course.
+We decided to have several classes in our code in order to structure the game and its
+functionalities and hierarchies. Most notably, we decided to have a "GameBoard" class
+which we used to display everything that goes on the game screen, both objects and their
+behaviors. The benefit of having a GameBoard class was that when we needed to restart the game,
+we could just create a new GameBoard object instead of having to manually reset the game screen.
+We also implemented classes for several of our features such as the portal gun, projectile behaviors,
+the portals, obstacles, player, and exit. Additionally, we also created classes to assist with
+game logic such as a timer class, a score reader class, map reader and writer classes, animations, and GUI.
+We encountered many challenges along the way, such as struggles with version control, implementing projectile animations,
+object detection so the sprite does not run through obstacles, and redrawing our different screens such as the menu screen,
+restart game screen, pause screen, victory screen, defeat screen, and high score screen.
+Despite the challenges, we were able to accomplish 99% of what we originally sought out to do,
+having to sacrifice a few features due to time and quality assurance and testing.
+
+Our 3 person team had its ups and downs; with finals and remote work, it made it difficult to collaborate and help one another.
+We had a member who was unfamiliar with GitHub which made progress slightly inefficient at times, however, we feel that the unfamiliarity
+of some tools such as GitHub allowed them to learn something extremely important for future work. In the final moments of the project,
+we struggled to merge all of our code together due to our individualized coding styles and some git technical difficulties. 
+However, we were able to deliver a finished product which was a very close reflection of what we aspired to accomplish before we started.
+
+Work division:
+Josh - Built the core aspects of the game. Including player functions, obstacle detection and placement, game physics, map design, animations, and overall game logic.
+
+Harris - an advertising major, worked on the GUI implementation and designed the pages for the main menu, pause menu, defeat screen,
+victory screen, and high score screen.
+
+Marilia - worked on implementing features such as sound, mute button, timer, pause button,  and error checking bugs in the
+last stretch before project submission such as making sure certain GUI features were only being displayed in their corresponding screens.
+
+Overall, we learned a lot from working on this project and working as a team, and we all feel accomplished to see the aggregate of the knowledge and
+skills we learned this semester in a packaged final product.
+
+Sources:
+1. https://pixabay.com/vectors/mesh-background-triangles-polygon-1430107/
+2. https://pixabay.com/vectors/gui-interface-internet-program-2774166/
+3. https://fontmeme.com/portal-font/
+4. https://www.nicepng.com/ourpic/u2q8u2w7q8r5r5t4_portal-gun-png-portal-2-portal-gun-png/
+5. https://www.pngwing.com/en/free-png-tqcyg
+6. https://www.dl-sounds.com/royalty-free/blazer-rail-2/
+

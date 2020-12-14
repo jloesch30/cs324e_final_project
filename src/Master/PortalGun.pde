@@ -82,6 +82,15 @@ class PortalGun { //<>//
     } else {
       image(pgImg, -8, -5);
     }
+    pushMatrix(); // second layer of heiarchy
+    translate(5, 0);
+    if (in) {
+      fill(0, 0, 255);
+    } else {
+      fill(255, 0, 0);
+    }
+    ellipse(0, 0, 10, 10);
+    popMatrix();
     popMatrix();
   }
   boolean checkPortals(PVector[][] hitBox) {

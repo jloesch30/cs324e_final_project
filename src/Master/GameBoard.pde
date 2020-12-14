@@ -1,12 +1,15 @@
-class GameBoard { //<>//
+//<>// //<>//
+class GameBoard {
   // map reader and writer
   MapReader r;
   MapWriter output;
+
 
   // player, protal gun, and portals
   Player player; // read in
   PortalGun pg;
   boolean pgState;
+
 
   //Portals port;
   float playerPosX; // read in
@@ -93,20 +96,20 @@ class GameBoard { //<>//
 
       if (initialGameStart) {
         gui.mainMenu();
+        gui.muteButton();
       } else if (pause) {
         // note: timer is handled in the button press
         gui.pauseMenu();
-        println("looseGame in the else if is: " + looseGame);
-        if (exitSketch){
-          exit(); 
-        }
       } else {
+
         gui.pauseButton();
         gui.levelDisplay(realMapNum);
         if ((!(looseGame)) && (!(player.wonLevel))) { // game can end either by a defeat or getting to the exit
+          gui.pauseButton();
+          gui.levelDisplay(realMapNum);
+          gui.timeDisplay(maxTimeAllowed - timeElapsed);
           player.display(objs, e);
           showPortalGunState();
-          gui.timeDisplay(maxTimeAllowed - timeElapsed);
           for (Obstacle o : objs) {
             o.display(); // display the objects
             e.display(); // display the exit
@@ -115,6 +118,8 @@ class GameBoard { //<>//
           if (looseGame) {
             t.stop();
             gui.defeatDisplay();
+            gui.exitButton();
+            gui.muteButton();
           } else if (player.wonLevel && player.saveGame) {
             t.stop(); // stop the time
             output.saveTime(t.second(), realMapNum); // save the time here
@@ -139,11 +144,11 @@ class GameBoard { //<>//
       }
     }
   }
-  
-  
+
+
   void draw() {
-  line(mouseX, mouseY, 50, 50);
-}
+    line(mouseX, mouseY, 50, 50);
+  }
 
   void loadMap() {
     //remove objects if nessisary
@@ -166,7 +171,6 @@ class GameBoard { //<>//
     for (int i = 0; i < r.objs.size(); i++) {
       JSONObject obstacle = r.objs.getJSONObject(i);
       JSONObject o = obstacle.getJSONObject("obstacle_" + nf(i + 1, 0));
-      println("object being read in is : " + o);
       int objX = o.getInt("x");
       int objY = o.getInt("y");
       int objW = o.getInt("w"); 
@@ -192,13 +196,11 @@ class GameBoard { //<>//
     timerRunning = !(timerRunning);
     if (pause == true) {
       t.stop();
-      println("looseGame is: " + looseGame);
     } else {
       t.resume();
     }
   }
   void showPortalGunState() {
-    println("pg.in is: " + pg.in);
     textSize(15);
     textAlign(CORNER);
     if (pgState == true) {
@@ -208,23 +210,23 @@ class GameBoard { //<>//
     }
   }
   void keyPressed(char k) {
-    if (k == 'a' || k == 'd' || k == ' ') { // character movement pressed
+    if ((k == 'a' || k == 'd' || k == ' ') && (initialGameStart == false)) { // character movement pressed
       player.activateActionState(k);
-    } else if (k == '1') { 
+    } else if (k == '1') {  //<>//
       player.pg.changeState();
       pgState = !(pgState);
-    } else if (k == 'x'){
+    } else if (k == 'x') {
       exitSketch = true;
     }
   }
   void keyReleased(char k) {
     //movement keys
-    if (k == 'a' || k == 'd' || k == ' ') { // character movement released
+    if ((k == 'a' || k == 'd' || k == ' ') && (initialGameStart == false)) { // character movement released
       player.deactivateActionState(k);
-
+      //<>//
       //  GUI keys //<>//
     } else if (key == ENTER && initialGameStart == true) { // start game //<>//
-      initialGameStart = false;
+      initialGameStart = false; //<>//
       timerRunning = true; // we may remove this
       readNextMap = true;
     } else if (key == ENTER && player.wonLevel == true) { // player won game and requested next level
@@ -234,8 +236,8 @@ class GameBoard { //<>//
       } else {
         rawMapNum += 1; // increase map count to load next map in JSON file
         readNextMap = true; // indicate to read next map
-        player.wonLevel = false; // reset player won state
-        player.saveGame = true; // reset save flag for new map
+        player.wonLevel = false; // reset player won state //<>//
+        player.saveGame = true; // reset save flag for new map //<>//
       }
     } else if (key == BACKSPACE && initialGameStart == false && player.wonLevel == false) { // Pause game
       pauseGame();
@@ -254,6 +256,10 @@ class GameBoard { //<>//
       gui.hover = false;
       if (initialGameStart == false && player.wonLevel == false) {
         pauseGame(); // pause the game
+      } else if (gui.hoverExit(mouseX, mouseY)) {
+        gui.mPress = true;
+        gui.hover = false;
+        exit();
       }
     }
   }
